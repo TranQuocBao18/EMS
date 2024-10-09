@@ -1,6 +1,8 @@
 using Blazored.Toast;
 using EMS.Web;
+using EMS.Web.Authentication;
 using EMS.Web.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +13,13 @@ builder.AddServiceDefaults();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddAuthentication();
+builder.Services.AddCascadingAuthenticationState();
+
 builder.Services.AddOutputCache();
 builder.Services.AddBlazoredToast();
+
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 
 builder.Services.AddHttpClient<ApiClient>(client =>
     {
@@ -34,6 +41,9 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseOutputCache();
 

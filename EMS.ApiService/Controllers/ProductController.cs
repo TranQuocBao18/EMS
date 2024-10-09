@@ -1,11 +1,13 @@
 ﻿using EMS.BL.Services;
 using EMS.Model.Entities;
 using EMS.Model.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.ApiService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController(IProductService productService) : ControllerBase
