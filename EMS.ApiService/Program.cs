@@ -63,6 +63,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 

@@ -1,6 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EMS.BL.Services;
+using EMS.Model.Entities;
 using EMS.Model.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,34 +13,73 @@ namespace EMS.ApiService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(IConfiguration configuration) : ControllerBase
+    public class AuthController(IConfiguration configuration, IAuthService authService) : ControllerBase
     {
         [HttpPost("login")]
-        public ActionResult<LoginResponseModel> Login([FromBody] LoginModel loginModel)
+        public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginModel loginModel)
         {
-            if (loginModel.Username == "Admin" && loginModel.Password == "Admin")
+			var user = await authService.GetUserByLogin(loginModel.Username, loginModel.Password);
+			if (user != null)
             {
-                var token = GenerateJwtToken(loginModel.Username);
-                return Ok(new LoginResponseModel { Token = token });
+                var token = GenerateJwtToken(user, isRefreshToken: false);
+                var refreshToken = GenerateJwtToken(user, isRefreshToken: true);
+
+				await authService.AddRefreshTokenModel(new RefreshTokenModel
+				{
+					RefreshToken = refreshToken,
+					UserID = user.ID
+				});
+
+				return Ok(new LoginResponseModel { 
+                    Token = token,
+					TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
+					RefreshToken = refreshToken
+                });
             }
             return null;
         }
-        private string GenerateJwtToken(string username)
-        {
-            var claims = new[]
+
+		[HttpGet("loginByRefeshToken")]
+		public async Task<ActionResult<LoginResponseModel>> LoginByRefeshToken(string refreshToken)
+		{
+			var refreshTokenModel = await authService.GetRefreshTokenModel(refreshToken);
+			if (refreshTokenModel == null)
+			{
+				return StatusCode(StatusCodes.Status400BadRequest);
+			}
+
+			var newToken = GenerateJwtToken(refreshTokenModel.User, isRefreshToken: false);
+			var newRefreshToken = GenerateJwtToken(refreshTokenModel.User, isRefreshToken: true);
+
+			await authService.AddRefreshTokenModel(new RefreshTokenModel
+			{
+				RefreshToken = newRefreshToken,
+				UserID = refreshTokenModel.UserID
+			});
+
+			return new LoginResponseModel
             {
-                new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, "Admin")
+                Token = newToken,
+                TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
+                RefreshToken = newRefreshToken,
             };
-            string secret = configuration.GetValue<string>("Jwt:Secret");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+		}
+		private string GenerateJwtToken(UserModel user, bool isRefreshToken)
+        {
+			var claims = new List<Claim>()
+			{
+				new Claim(ClaimTypes.Name, user.Username),
+			};
+			claims.AddRange(user.UserRoles.Select(n => new Claim(ClaimTypes.Role, n.Role.RoleName)));
+			string secret = configuration.GetValue<string>($"Jwt:{(isRefreshToken ? "RefreshTokenSecret" : "Secret")}");
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "TranBao",
                 audience: "TranBao",
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddHours(isRefreshToken ? 24 : 12),
                 signingCredentials: creds
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
