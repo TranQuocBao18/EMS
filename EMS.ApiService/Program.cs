@@ -1,4 +1,5 @@
-using System.Text;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 using EMS.BL.Repositories;
 using EMS.BL.Services;
 using EMS.Database.Data;
@@ -12,7 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+	options.JsonSerializerOptions.WriteIndented = true; // Nếu muốn format JSON đẹp hơn (có thụt dòng)
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -68,7 +73,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

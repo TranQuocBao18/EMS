@@ -64,6 +64,24 @@ namespace EMS.ApiService.Controllers
                 RefreshToken = newRefreshToken,
             };
 		}
+		[HttpPost("register")]
+		public async Task<ActionResult<BaseResponseModel>> Register(RegisterModel registerModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(new BaseResponseModel { Success = false, ErrorMessage = "Invalid input" });
+			}
+			if (registerModel != null)
+			{
+				var user = await authService.CreateUser(registerModel.Username, registerModel.Password, registerModel.RoleIDs);
+				if (user == null)
+				{
+					return BadRequest(new BaseResponseModel { Success = false, ErrorMessage = "User already exists" });
+				}
+				return Ok(new BaseResponseModel { Success = true, Data = user });
+			}
+			return null;
+		}
 		private string GenerateJwtToken(UserModel user, bool isRefreshToken)
         {
 			var claims = new List<Claim>()
