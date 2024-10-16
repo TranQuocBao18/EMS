@@ -21,9 +21,20 @@ namespace EMS.BL.Repositories
 	}
 	public class AuthRepository(AppDbContext dbContext) : IAuthRepository
 	{
-		public Task<UserModel> GetUserByLogin(string username, string password)
+		public async Task<UserModel> GetUserByLogin(string username, string password)
 		{
-			return dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.Username == username && n.Password == password);
+			// Tìm người dùng dựa trên username
+			var user = await dbContext.Users.Include(n => n.UserRoles)
+								   .ThenInclude(n => n.Role)
+								   .FirstOrDefaultAsync(n => n.Username == username);
+
+			// Nếu user tồn tại và mật khẩu khớp với mật khẩu đã được hash
+			if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+			{
+				return user; // Trả về user nếu mật khẩu đúng
+			}
+
+			return null;
 		}
 		public async Task RemoveRefreshTokenByUserID(int userID)
 		{

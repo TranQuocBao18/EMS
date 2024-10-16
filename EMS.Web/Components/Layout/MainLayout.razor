@@ -1,6 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @using Blazored.Toast.Configuration
 @using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="page">
 	<div class="sidebar">
@@ -14,7 +16,7 @@
 					<div>Hello, @context.User.Identity?.Name!</div>
 				</Authorized>
 				<NotAuthorized>
-					<div>You're not authorized.</div>
+					<a href="/login">Log In</a>
 				</NotAuthorized>
 			</AuthorizeView>
 			<AuthorizeView>
@@ -42,3 +44,17 @@
 	<a href="" class="reload">Reload</a>
 	<a class="dismiss">🗙</a>
 </div>
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+
+		if (!user.Identity.IsAuthenticated)
+		{
+			// Nếu chưa đăng nhập thì chuyển hướng đến trang login
+			Navigation.NavigateTo("/login");
+		}
+	}
+}
