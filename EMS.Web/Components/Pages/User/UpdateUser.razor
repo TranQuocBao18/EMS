@@ -1,0 +1,19 @@
+﻿@page "/user/update/{ID:int}"
+@rendermode InteractiveServer
+
+<h3>UpdateUser</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="CreateProduct" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Username</label>
+                <InputText class="form-control" @bind-Value="Model.Username" />
+                <ValidationMessage For="() => Model.Username" />
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</EditForm>
+

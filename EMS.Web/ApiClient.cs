@@ -1,4 +1,4 @@
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using EMS.Model.Models;
 using EMS.Web.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -52,7 +52,14 @@ public class ApiClient(HttpClient httpClient, ProtectedLocalStorage localStorage
 		{
 			return JsonConvert.DeserializeObject<T1>(await res.Content.ReadAsStringAsync());
 		}
-		return default;
+        else
+        {
+            // Ném ra ngoại lệ với thông tin lỗi từ API
+            var errorContent = await res.Content.ReadAsStringAsync();
+            var errorMessage = JsonConvert.DeserializeObject<Dictionary<string, string>>(errorContent)?["message"] ?? "Có lỗi xảy ra.";
+            throw new ApiException(errorMessage, (int)res.StatusCode);
+        }
+        return default;
 	}
 	public async Task<T1> PutAsync<T1, T2>(string path, T2 postModel)
 	{

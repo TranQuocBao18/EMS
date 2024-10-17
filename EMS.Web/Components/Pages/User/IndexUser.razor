@@ -1,0 +1,53 @@
+﻿@page "/user"
+@using EMS.Web.Components.BaseComponents
+<h3>IndexUser</h3>
+
+@if (UserModels == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>UserRoles</th>
+                <th>IsLock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in UserModels)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>
+                        @foreach (var role in user.UserRoles)
+                        {
+                            <span>@role.Role.RoleName</span>
+                            <br />
+                        }
+                    </td>
+                    <td>@user.IsLock</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/user/update/@user.ID">Update</a>
+                        <button class="btn btn-danger" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Notification</Title>
+        <Body>
+            Bạn có muốn xoá người dùng này ?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+        </Footer>
+    </AppModal>
+}
+

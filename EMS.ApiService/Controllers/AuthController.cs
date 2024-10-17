@@ -11,33 +11,43 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EMS.ApiService.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController(IConfiguration configuration, IAuthService authService) : ControllerBase
-    {
-        [HttpPost("login")]
-        public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginModel loginModel)
-        {
+	[Route("api/[controller]")]
+	[ApiController]
+	public class AuthController(IConfiguration configuration, IAuthService authService) : ControllerBase
+	{
+		[HttpPost("login")]
+		public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginModel loginModel)
+		{
 			var user = await authService.GetUserByLogin(loginModel.Username, loginModel.Password);
-			if (user != null)
-            {
-                var token = GenerateJwtToken(user, isRefreshToken: false);
-                var refreshToken = GenerateJwtToken(user, isRefreshToken: true);
+			// Trường hợp tài khoản không tồn tại hoặc mật khẩu không đúng
+			if (user == null)
+			{
+				return BadRequest(new { Message = "Tài khoản hoặc mật khẩu không chính xác." });
+			}
 
-				await authService.AddRefreshTokenModel(new RefreshTokenModel
-				{
-					RefreshToken = refreshToken,
-					UserID = user.ID
-				});
+			// Kiểm tra nếu tài khoản bị khóa
+			if (user.IsLock)
+			{
+				return BadRequest(new { Message = "Tài khoản của bạn đã bị khóa." });
+			}
 
-				return Ok(new LoginResponseModel { 
-                    Token = token,
-					TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
-					RefreshToken = refreshToken
-                });
-            }
-            return null;
-        }
+
+			var token = GenerateJwtToken(user, isRefreshToken: false);
+			var refreshToken = GenerateJwtToken(user, isRefreshToken: true);
+
+			await authService.AddRefreshTokenModel(new RefreshTokenModel
+			{
+				RefreshToken = refreshToken,
+				UserID = user.ID
+			});
+
+			return Ok(new LoginResponseModel
+			{
+				Token = token,
+				TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
+				RefreshToken = refreshToken
+			});
+		}
 
 		[HttpGet("loginByRefeshToken")]
 		public async Task<ActionResult<LoginResponseModel>> LoginByRefeshToken(string refreshToken)
@@ -58,11 +68,11 @@ namespace EMS.ApiService.Controllers
 			});
 
 			return new LoginResponseModel
-            {
-                Token = newToken,
-                TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
-                RefreshToken = newRefreshToken,
-            };
+			{
+				Token = newToken,
+				TokenExpired = DateTimeOffset.UtcNow.AddHours(12).ToUnixTimeSeconds(),
+				RefreshToken = newRefreshToken,
+			};
 		}
 		[HttpPost("register")]
 		public async Task<ActionResult<BaseResponseModel>> Register(RegisterModel registerModel)
@@ -83,7 +93,7 @@ namespace EMS.ApiService.Controllers
 			return null;
 		}
 		private string GenerateJwtToken(UserModel user, bool isRefreshToken)
-        {
+		{
 			var claims = new List<Claim>()
 			{
 				new Claim(ClaimTypes.Name, user.Username),
@@ -91,16 +101,16 @@ namespace EMS.ApiService.Controllers
 			claims.AddRange(user.UserRoles.Select(n => new Claim(ClaimTypes.Role, n.Role.RoleName)));
 			string secret = configuration.GetValue<string>($"Jwt:{(isRefreshToken ? "RefreshTokenSecret" : "Secret")}");
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                issuer: "TranBao",
-                audience: "TranBao",
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(isRefreshToken ? 24 : 12),
-                signingCredentials: creds
-                );
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-    }
+			var token = new JwtSecurityToken(
+				issuer: "TranBao",
+				audience: "TranBao",
+				claims: claims,
+				expires: DateTime.UtcNow.AddHours(isRefreshToken ? 24 : 12),
+				signingCredentials: creds
+				);
+			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+	}
 }

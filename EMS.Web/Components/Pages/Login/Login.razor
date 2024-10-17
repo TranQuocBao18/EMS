@@ -25,13 +25,23 @@
 
 @code {
     private LoginModel loginModel = new LoginModel();
+    [Inject]
+    private IToastService ToastService { get; set; }
+
     private async Task HandleLogin()
     {
-        var res = await ApiClient.PostAsync<LoginResponseModel, LoginModel>("/api/auth/login", loginModel);
-        if (res != null && res.Token != null)
+        try
         {
-            await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsAuthenticated(res);
-            Navigation.NavigateTo("/");
+            var res = await ApiClient.PostAsync<LoginResponseModel, LoginModel>("/api/auth/login", loginModel);
+            if (res != null && res.Token != null)
+            {
+                await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsAuthenticated(res);
+                Navigation.NavigateTo("/");
+            }
+        }
+        catch (ApiException ex)
+        {
+            ToastService.ShowError(ex.Message); // Hiển thị thông báo lỗi từ API
         }
     }
 }
