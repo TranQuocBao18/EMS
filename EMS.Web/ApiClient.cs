@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using EMS.Model.Models;
+using EMS.Model.Models.Others;
 using EMS.Web.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
@@ -76,5 +76,20 @@ public class ApiClient(HttpClient httpClient, ProtectedLocalStorage localStorage
 		await SetAuthorizeHeader();
 		return await httpClient.DeleteFromJsonAsync<T>(path);
 	}
+    public async Task<T1> PatchAsync<T1>(string path, object patchModel)
+    {
+        await SetAuthorizeHeader();
+        var res = await httpClient.PatchAsJsonAsync(path, patchModel);
+
+        if (res != null && res.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<T1>(await res.Content.ReadAsStringAsync());
+        }
+
+        // Ném ra ngoại lệ với thông tin lỗi từ API
+        var errorContent = await res.Content.ReadAsStringAsync();
+        var errorMessage = JsonConvert.DeserializeObject<Dictionary<string, string>>(errorContent)?["message"] ?? "Có lỗi xảy ra.";
+        throw new ApiException(errorMessage, (int)res.StatusCode);
+    }
 }
 

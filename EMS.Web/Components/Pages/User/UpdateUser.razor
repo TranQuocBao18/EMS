@@ -13,6 +13,20 @@
                 <ValidationMessage For="() => Model.Username" />
             </div>
         </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Roles</label>
+                @foreach (var role in AllRoles) 
+                {
+                    <div>
+                        <InputCheckbox @bind-Value="role.IsSelected" />
+                        @role.RoleName
+                    </div>
+                }
+            </div>
+        </div>
+
         <button class="btn btn-secondary" type="submit">Save</button>
     </div>
 </EditForm>

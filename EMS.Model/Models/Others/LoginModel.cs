@@ -5,17 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Model.Models
+namespace EMS.Model.Models.Others
 {
-    public class UpdatePasswordRequest
+    public class LoginModel
     {
         [Required]
         public string Username { get; set; }
-
         [Required]
-        public string OldPassword { get; set; }
-
-        [Required]
-        public string NewPassword { get; set; }
+        public string Password { get; set; }
     }
 }

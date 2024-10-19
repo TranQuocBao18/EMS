@@ -19,6 +19,8 @@ namespace EMS.BL.Repositories
         Task<UserModel> CreateUser(UserModel userModel);
         Task DeleteUser(int id);
         Task UpdateUser(UserModel userModel);
+        Task UpdateUserRoles(int userId, List<UserRoleModel> userRoles);
+
     }
     public class UserRepository(AppDbContext dbContext) : IUserRepository
     {
@@ -74,6 +76,12 @@ namespace EMS.BL.Repositories
             // Tìm người dùng theo username
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
 
+            // Kiểm tra nếu người dùng không tồn tại
+            if (user == null)
+            {
+                return false; // Hoặc bạn có thể ném ra một ngoại lệ tùy ý
+            }
+
             // Đảo ngược trạng thái IsLock
             user.IsLock = !user.IsLock;
 
@@ -87,6 +95,20 @@ namespace EMS.BL.Repositories
         public async Task UpdateUser(UserModel userModel)
         {
             dbContext.Entry(userModel).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserRoles(int userId, List<UserRoleModel> userRoles)
+        {
+            var existingRoles = dbContext.UserRoles.Where(ur => ur.UserID == userId);
+            dbContext.UserRoles.RemoveRange(existingRoles);
+
+            // Thêm các vai trò mới
+            foreach (var role in userRoles)
+            {
+                dbContext.UserRoles.Add(new UserRoleModel { UserID = userId, RoleID = role.RoleID });
+            }
+
             await dbContext.SaveChangesAsync();
         }
 

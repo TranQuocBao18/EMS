@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Model.Models
+namespace EMS.Model.Models.Others
 {
     public class LoginResponseModel
     {

@@ -1,6 +1,6 @@
 ﻿using EMS.BL.Services;
 using EMS.Model.Entities;
-using EMS.Model.Models;
+using EMS.Model.Models.Others;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

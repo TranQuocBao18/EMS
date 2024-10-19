@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using EMS.BL.Services;
 using EMS.Model.Entities;
-using EMS.Model.Models;
+using EMS.Model.Models.Others;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EMS.ApiService.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class AuthController(IConfiguration configuration, IAuthService authService) : ControllerBase
 	{

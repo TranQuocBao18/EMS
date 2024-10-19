@@ -33,6 +33,7 @@ else
                     <td>
                         <a class="btn btn-secondary" href="/user/update/@user.ID">Update</a>
                         <button class="btn btn-danger" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Delete</button>
+                        <button class="btn btn-primary" @onclick="()=>{ UserName = user.Username; LockModal.Open();}">Lock/Unlock</button>
                     </td>
                 </tr>
             }
@@ -46,6 +47,17 @@ else
         </Body>
         <Footer>
             <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+        </Footer>
+    </AppModal>
+
+    <AppModal @ref="LockModal">
+        <Title>Notification</Title>
+        <Body>
+            Bạn có muốn khoá/mở khoá người dùng này ?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLock">Yes</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
         </Footer>
     </AppModal>

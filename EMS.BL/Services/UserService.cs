@@ -18,6 +18,7 @@ namespace EMS.BL.Services
         Task<UserModel> CreateUser(UserModel userModel);
         Task DeleteUser(int id);
         Task UpdateUser(UserModel userModel);
+        Task UpdateUserRoles(int userId, List<UserRoleModel> userRoles);
     }
     public class UserService(IUserRepository userRepository) : IUserService
     {
@@ -54,6 +55,11 @@ namespace EMS.BL.Services
         public Task UpdateUser(UserModel userModel)
         {
             return userRepository.UpdateUser(userModel);
+        }
+
+        public Task UpdateUserRoles(int userId, List<UserRoleModel> userRoles)
+        {
+            return userRepository.UpdateUserRoles(userId, userRoles);
         }
 
         public Task<bool> UserModelExists(int id)

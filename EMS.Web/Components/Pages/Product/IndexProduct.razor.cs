@@ -1,6 +1,6 @@
 ﻿using Blazored.Toast.Services;
 using EMS.Model.Entities;
-using EMS.Model.Models;
+using EMS.Model.Models.Others;
 using EMS.Web.Components.BaseComponents;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;

@@ -1,6 +1,6 @@
 ﻿using EMS.BL.Services;
 using EMS.Model.Entities;
-using EMS.Model.Models;
+using EMS.Model.Models.Others;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,7 +61,7 @@ namespace EMS.ApiService.Controllers
             }
         }
 
-        [HttpPut("ToggleUserLockStatus")]
+        [HttpPatch("ToggleUserLockStatus")]
         public async Task<IActionResult> ToggleUserLockStatus(string username)
         {
             var result = await userService.ToggleUserLockStatus(username);
@@ -85,6 +85,9 @@ namespace EMS.ApiService.Controllers
             }
 
             await userService.UpdateUser(userModel);
+            var userRolesList = userModel.UserRoles.ToList(); // Chuyển đổi ICollection thành List
+
+            await userService.UpdateUserRoles(userModel.ID, userRolesList); // Sử dụng userRolesList
             return Ok(new BaseResponseModel { Success = true });
         }
     }
