@@ -8,6 +8,7 @@
 }
 else
 {
+    <a class="btn btn-primary" href="/user/register">Create</a>
     <table class="table">
         <thead>
             <tr>
@@ -58,7 +59,7 @@ else
         </Body>
         <Footer>
             <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLock">Yes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => LockModal.Close()">Cancel</button>
         </Footer>
     </AppModal>
 }

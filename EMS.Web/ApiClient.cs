@@ -76,7 +76,7 @@ public class ApiClient(HttpClient httpClient, ProtectedLocalStorage localStorage
 		await SetAuthorizeHeader();
 		return await httpClient.DeleteFromJsonAsync<T>(path);
 	}
-    public async Task<T1> PatchAsync<T1>(string path, object patchModel)
+    public async Task<T1> PatchAsync<T1,T2>(string path, T2 patchModel)
     {
         await SetAuthorizeHeader();
         var res = await httpClient.PatchAsJsonAsync(path, patchModel);

@@ -1,0 +1,61 @@
+﻿@page "/user/register"
+@inject NavigationManager Navigation
+@using System.ComponentModel.DataAnnotations
+<h3>RegisterUser</h3>
+
+<div class="p-5">
+    <EditForm Model="registerModel" FormName="Register" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="username">Username</label>
+            <InputText id="username" class="form-control" @bind-Value="registerModel.Username" />
+            <ValidationMessage For="@(() => registerModel.Username)" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+                <InputText id="password" class="form-control" type="@passwordInputType" @bind-Value="registerModel.Password" />
+                <span class="input-group-text" @onclick="TogglePasswordVisibility" style="cursor:pointer;">
+                    <i class="@passwordIcon"></i>
+                </span>
+            </div>
+            <ValidationMessage For="@(() => registerModel.Password)" />
+        </div>
+        <div class="form-group">
+            <label for="passwordconfirm">Password Confirm</label>
+            <div class="input-group">
+                <InputText id="passwordconfirm" class="form-control" type="@confirmPasswordInputType" @bind-Value="registerModel.PasswordConfirm" />
+                <span class="input-group-text" @onclick="ToggleConfirmPasswordVisibility" style="cursor:pointer;">
+                    <i class="@confirmPasswordIcon"></i>
+                </span>
+            </div>
+            <ValidationMessage For="@(() => registerModel.PasswordConfirm)" />
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Roles</label>
+                @foreach (var role in AllRoles)
+                {
+                    <div>
+                        <InputCheckbox @bind-Value="role.IsSelected" />
+                        @role.RoleName
+                    </div>
+                }
+                <ValidationMessage For="@(() => registerModel.RoleIDs)" /> <!-- Hiển thị thông báo lỗi cho RoleIDs -->
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Register</button>
+        <a class="btn btn-secondary mt-3" href="/user">Back</a>
+    </EditForm>
+</div>
+
+<AppModal @ref="Modal">
+    <Title>Notification</Title>
+    <Body>
+        Bạn có muốn đăng xuất hay không ?
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLogout">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">No</button>
+    </Footer>
+</AppModal>

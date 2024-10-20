@@ -47,12 +47,12 @@ namespace EMS.Web.Components.Pages.User
 
         protected async Task HandleLock()
         {
-            var res = await ApiClient.PatchAsync<BaseResponseModel>("/api/User/ToggleUserLockStatus", UserName);
+            var res = await ApiClient.PatchAsync<BaseResponseModel, object>($"/api/User/ToggleUserLockStatus?username={UserName}", null);
             if (res != null && res.Success)
             {
                 ToastService.ShowSuccess("Cập nhật trạng thái khoá của người dùng thành công");
                 await LoadUser();
-                Modal.Close();
+                LockModal.Close();
             }
         }
     }

@@ -68,7 +68,7 @@ namespace EMS.ApiService.Controllers
 
             if (result)
             {
-                return Ok(new { message = "User lock status updated successfully." });
+                return Ok(new BaseResponseModel { Success = true, ErrorMessage = "User lock status updated successfully." });
             }
             else
             {
