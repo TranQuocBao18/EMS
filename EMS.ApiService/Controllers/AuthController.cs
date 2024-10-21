@@ -4,6 +4,7 @@ using System.Text;
 using EMS.BL.Services;
 using EMS.Model.Entities;
 using EMS.Model.Models.Others;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -74,7 +75,9 @@ namespace EMS.ApiService.Controllers
 				RefreshToken = newRefreshToken,
 			};
 		}
-		[HttpPost("register")]
+
+        [Authorize(Roles = "Lv1")]
+        [HttpPost("register")]
 		public async Task<ActionResult<BaseResponseModel>> Register(RegisterModel registerModel)
 		{
 			if (!ModelState.IsValid)

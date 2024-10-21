@@ -53,11 +53,6 @@ namespace EMS.Web.Components.Pages.User
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            //var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/User/{ID}");
-            //if (res != null && res.Success)
-            //{
-            //    Model = JsonConvert.DeserializeObject<UserModel>(res.Data.ToString());
-            //}
 
             var rolesRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Role");
             if (rolesRes != null && rolesRes.Success)

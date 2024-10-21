@@ -91,5 +91,31 @@ public class ApiClient(HttpClient httpClient, ProtectedLocalStorage localStorage
         var errorMessage = JsonConvert.DeserializeObject<Dictionary<string, string>>(errorContent)?["message"] ?? "Có lỗi xảy ra.";
         throw new ApiException(errorMessage, (int)res.StatusCode);
     }
+
+	public async Task<bool> CheckSessionState()
+	{
+		var sessionState = (await localStorage.GetAsync<LoginResponseModel>("sessionState")).Value;
+		if (sessionState == null || string.IsNullOrEmpty(sessionState.Token) || sessionState.TokenExpired < DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+		{
+			await ((CustomAuthStateProvider)authStateProvider).MarkUserAsLoggedOut();
+			return false;
+		}
+		else if (sessionState.TokenExpired < DateTimeOffset.UtcNow.AddMinutes(10).ToUnixTimeSeconds())
+		{
+			// Làm mới token nếu sắp hết hạn
+			var res = await httpClient.GetFromJsonAsync<LoginResponseModel>($"/api/auth/loginByRefeshToken?refreshToken={sessionState.RefreshToken}");
+			if (res != null)
+			{
+				await ((CustomAuthStateProvider)authStateProvider).MarkUserAsAuthenticated(res);
+				httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", res.Token);
+			}
+			else
+			{
+				await ((CustomAuthStateProvider)authStateProvider).MarkUserAsLoggedOut();
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
