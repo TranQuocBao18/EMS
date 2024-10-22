@@ -1,0 +1,24 @@
+﻿@page "/department/update/{ID:int}"
+@rendermode InteractiveServer
+
+<h3>UpdateDepartment</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="UpdateDepartment" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> ID </label>
+                <InputNumber class="form-control" @bind-Value="Model.ID" />
+                <ValidationMessage For="() => Model.ID" />
+            </div>
+            <div class="col-md-6">
+                <label> Tên phòng/khoa</label>
+                <InputText class="form-control" @bind-Value="Model.DepartmentName" />
+                <ValidationMessage For="() => Model.DepartmentName" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Lưu</button>
+        <a class="btn btn-secondary" href="/department">Trở về</a>
+    </div>
+</EditForm>

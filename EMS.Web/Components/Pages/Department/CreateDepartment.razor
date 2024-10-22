@@ -1,0 +1,20 @@
+﻿@page "/department/create"
+@rendermode InteractiveServer
+
+<h3>CreateDepartment</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="CreateDepartment" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Tên phòng/khoa</label>
+                <InputText class="form-control" @bind-Value="Model.DepartmentName" />
+                <ValidationMessage For="() => Model.DepartmentName" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/department">Trở về</a>
+
+    </div>
+</EditForm>

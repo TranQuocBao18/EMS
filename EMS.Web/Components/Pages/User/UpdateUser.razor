@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-md-6">
-                <label> Username</label>
+                <label> Tên tài khoản</label>
                 <InputText class="form-control" @bind-Value="Model.Username" />
                 <ValidationMessage For="() => Model.Username" />
             </div>
@@ -16,7 +16,7 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label>Roles</label>
+                <label>Vai trò</label>
                 @foreach (var role in AllRoles) 
                 {
                     <div>
@@ -27,8 +27,8 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-secondary" href="/user">Back</a>
+        <button class="btn btn-primary" type="submit">Lưu</button>
+        <a class="btn btn-secondary" href="/user">Trở về</a>
 
     </div>
 </EditForm>

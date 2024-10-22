@@ -1,0 +1,43 @@
+﻿@page "/department"
+<h3>IndexDepartment</h3>
+
+@if (DepartmentModels == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/department/create">Create</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên phòng/khoa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in DepartmentModels)
+            {
+                <tr>
+                    <td>@department.ID</td>
+                    <td>@department.DepartmentName</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/department/update/@department.ID">Update</a>
+                        <button class="btn btn-danger" @onclick="()=> { DeleteID = department.ID; Modal.Open();}">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Notification</Title>
+        <Body>
+            Bạn có chắc là muốn xoá phòng/khoa này không?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Có</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Không</button>
+        </Footer>
+    </AppModal>
+}

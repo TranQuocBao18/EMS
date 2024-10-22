@@ -19,5 +19,11 @@ namespace EMS.Database.Data
 		public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
 		public DbSet<UserRoleModel> UserRoles { get; set; }
 		public DbSet<RoleModel> Roles { get; set; }
+        public DbSet<DepartmentModel> Departments { get; set; }
+        public DbSet<EquipmentModel> Equipments { get; set; }
+        public DbSet<EquipmentTypeModel> EquipmentTypes { get; set; }
+        public DbSet<RotatingRequestModel> RotatingRequests { get; set; }
+
+
 	}
 }

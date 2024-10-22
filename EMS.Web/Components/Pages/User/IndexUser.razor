@@ -10,17 +10,17 @@ else
 {
 	<AuthorizeView Roles="Lv1">
 		<Authorized>
-			<a class="btn btn-primary" href="/user/register">Create</a>
+			<a class="btn btn-primary" href="/user/register">Tạo người dùng</a>
 		</Authorized>
 	</AuthorizeView>
 
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Username</th>
-				<th>UserRoles</th>
-				<th>IsLock</th>
-				<th>Action</th>
+				<th>Tên tài khoản</th>
+				<th>Vai trò</th>
+				<th>Khoá</th>
+				<th>Hành động</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,9 +37,9 @@ else
 					</td>
 					<td>@user.IsLock</td>
 					<td>
-						<a class="btn btn-secondary" href="/user/update/@user.ID">Update</a>
-						<button class="btn btn-danger" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Delete</button>
-						<button class="btn btn-primary" @onclick="()=>{ UserName = user.Username; LockModal.Open();}">Lock/Unlock</button>
+						<a class="btn btn-secondary" href="/user/update/@user.ID">Cập nhật</a>
+						<button class="btn btn-danger" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Xoá</button>
+						<button class="btn btn-primary" @onclick="()=>{ UserName = user.Username; LockModal.Open();}">Khoá/Mở khoá</button>
 					</td>
 				</tr>
 			}
@@ -52,8 +52,8 @@ else
 			Bạn có muốn xoá người dùng này ?
 		</Body>
 		<Footer>
-			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Có</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Không</button>
 		</Footer>
 	</AppModal>
 
@@ -63,8 +63,8 @@ else
 			Bạn có muốn khoá/mở khoá người dùng này ?
 		</Body>
 		<Footer>
-			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLock">Yes</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => LockModal.Close()">Cancel</button>
+			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLock">Có</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => LockModal.Close()">Không</button>
 		</Footer>
 	</AppModal>
 }

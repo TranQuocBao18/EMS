@@ -8,9 +8,10 @@ namespace EMS.Model.Entities
 {
 	public enum EquipmentStatus
 	{
-		DangHoatDong = 1,
-		DangBaoTri = 2,
-		DangSuaChua = 3
+		DangSuDung = 1,
+		KhongSuDung = 2,
+		DangBaoTri = 3,
+		DangSuaChua = 4
 	}
 	public class EquipmentModel
 	{
@@ -18,16 +19,22 @@ namespace EMS.Model.Entities
 		public string EquipmentName { get; set; }
 		public string EquipmentModelCode { get; set; }
 		public string EquipmentSerial { get; set; }
-		public string EquipmentTypeDes { get; set; }
+
+		// Khóa ngoại để liên kết với EquipmentType
+		public int EquipmentTypeId { get; set; }
+		public virtual EquipmentTypeModel EquipmentType { get; set; }  // Thuộc tính điều hướng
+
 		public double Price { get; set; }
 		public DateOnly PurchaseDay { get; set; }
 		public EquipmentStatus Status { get; set; }
 		public DateOnly ExpireDay { get; set; }
+
 		// Khóa ngoại để liên kết với Department
 		public int DepartmentId { get; set; }
 		public virtual DepartmentModel Department { get; set; }  // Thuộc tính điều hướng
-		// Khóa ngoại để liên kết với EquipmentType
-		public int EquipmentTypeId { get; set; }
-		public virtual EquipmentTypeModel EquipmentType { get; set; }  // Thuộc tính điều hướng
+		
+		// Khóa ngoại để liên kết với User
+		public int UserId { get; set; }
+		public virtual UserModel User { get; set; } // Thuộc tính điều hướng
 	}
 }
