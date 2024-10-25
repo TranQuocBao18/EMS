@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using EMS.Web.Authentication
 @using Blazored.Toast.Configuration
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
@@ -14,7 +15,7 @@
 		<div class="top-row px-4">
 			<AuthorizeView>
 				<Authorized>
-					<div>Hello, @context.User.Identity?.Name!</div>
+					<div>Hello, @userName!</div>
 				</Authorized>
 				<NotAuthorized>
 					<a href="/login">Log In</a>
@@ -47,6 +48,7 @@
 </div>
 
 @code {
+	private string userName;
 	protected override async Task OnInitializedAsync()
 	{
 		// Kiểm tra session ngay khi khởi chạy
@@ -59,6 +61,7 @@
 			// Điều hướng đến trang login nếu session hết hạn
 			Navigation.NavigateTo("/login", true);
 		}
-		
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		userName = authState.User.Identity?.Name;
 	}
 }

@@ -1,0 +1,75 @@
+﻿@page "/equipment"
+@using EMS.Web.Components.BaseComponents
+
+<h3>IndexEquipment</h3>
+
+@if (EquipmentModels == null)
+{
+	<p>Đang tải ...</p>
+}
+else
+{
+
+	<a class="btn btn-primary" href="/equipment/createequipment">Tạo thiết bị</a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Tên thiết bị</th>
+				<th>Mã Model</th>
+				<th>Số Serial</th>
+				<th>Loại thiết bị</th>
+				<th>Giá</th>
+				<th>Ngày mua</th>
+				<th>Trạng thái</th>
+				<th>Ngày hết hạn</th>
+				<th>Phòng/khoa</th>
+				<th>Thuộc người dùng</th>
+				<th>Hành động</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var equipment in EquipmentModels)
+			{
+				<tr>
+					<td>@equipment.ID</td>
+					<td>@equipment.EquipmentName</td>
+					<td>@equipment.EquipmentModelCode</td>
+					<td>@equipment.EquipmentSerial</td>
+					<td>@equipment.EquipmentType?.EquipmentTypeName</td>
+					<td>@equipment.Price</td>
+					<td>@equipment.PurchaseDay</td>
+					<td>@equipment.Status</td>
+					<td>@equipment.ExpireDay</td>
+					<td>@equipment.Department?.DepartmentName</td>
+					<td>
+						@if (equipment.User==null)
+						{
+							<span>không có</span>
+						}
+						else
+						{
+							<span>@equipment.User?.Username</span>
+						}
+					</td>
+					<td>
+						<a class="btn btn-secondary" href="/equipment/update/@equipment.ID">Cập nhật</a>
+						<button class="btn btn-danger" @onclick="()=> { DeleteID = equipment.ID; Modal.Open();}">Xoá</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<AppModal @ref="Modal">
+		<Title>Notification</Title>
+		<Body>
+			Bạn có muốn xoá thiết bị này ?
+		</Body>
+		<Footer>
+			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Có</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Không</button>
+		</Footer>
+	</AppModal>
+}

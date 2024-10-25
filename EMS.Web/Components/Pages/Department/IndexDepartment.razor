@@ -3,11 +3,11 @@
 
 @if (DepartmentModels == null)
 {
-    <p>Loading ...</p>
+    <p>Đang tải ...</p>
 }
 else
 {
-    <a class="btn btn-primary" href="/department/create">Create</a>
+    <a class="btn btn-primary" href="/department/create">Tạo phòng/khoa</a>
     <table class="table">
         <thead>
             <tr>
@@ -22,8 +22,8 @@ else
                     <td>@department.ID</td>
                     <td>@department.DepartmentName</td>
                     <td>
-                        <a class="btn btn-secondary" href="/department/update/@department.ID">Update</a>
-                        <button class="btn btn-danger" @onclick="()=> { DeleteID = department.ID; Modal.Open();}">Delete</button>
+                        <a class="btn btn-secondary" href="/department/update/@department.ID">Cập nhật</a>
+                        <button class="btn btn-danger" @onclick="()=> { DeleteID = department.ID; Modal.Open();}">Xoá</button>
                     </td>
                 </tr>
             }

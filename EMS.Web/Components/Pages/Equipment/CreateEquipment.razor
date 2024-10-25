@@ -1,0 +1,96 @@
+﻿@page "/equipment/createequipment"
+@using EMS.Model.Entities
+@rendermode InteractiveServer
+<h3>CreateEquipment</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="CreateEquipment" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Tên thiết bị</label>
+                <InputText class="form-control" @bind-Value="Model.EquipmentName" />
+                <ValidationMessage For="() => Model.EquipmentName" />
+            </div>
+            <div class="col-md-6">
+                <label> Mã Model</label>
+                <InputText class="form-control" @bind-Value="Model.EquipmentModelCode" />
+                <ValidationMessage For="() => Model.EquipmentModelCode" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Số Serial</label>
+                <InputText class="form-control" @bind-Value="Model.EquipmentSerial" />
+                <ValidationMessage For="() => Model.EquipmentSerial" />
+            </div>
+            <div class="col-md-6">
+                <label>Loại thiết bị</label>
+                <InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
+                    <option value="">Chọn loại thiết bị</option>
+                    @foreach (var equipmentType in EquipmentTypes)
+                    {
+                        <option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.EquipmentTypeId" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Giá</label>
+                <InputNumber class="form-control" @bind-Value="Model.Price" />
+                <ValidationMessage For="() => Model.Price" />
+            </div>
+            <div class="col-md-6">
+                <label> Ngày mua</label>
+                <InputDate class="form-control" @bind-Value="Model.PurchaseDay" />
+                <ValidationMessage For="() => Model.PurchaseDay" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Trạng thái</label>
+                <select class="form-control" @bind="Model.Status">
+                    @foreach (var status in Enum.GetValues(typeof(EquipmentStatus)).Cast<EquipmentStatus>())
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+                <ValidationMessage For="() => Model.Status" />
+            </div>
+            <div class="col-md-6">
+                <label> Ngày hết hạn</label>
+                <InputDate class="form-control" @bind-Value="Model.ExpireDay" />
+                <ValidationMessage For="() => Model.ExpireDay" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Phòng ban</label>
+                <InputSelect class="form-control" @bind-Value="Model.DepartmentId">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var department in Departments)
+                    {
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.DepartmentId" />
+            </div>
+            <div class="col-md-6">
+                <label>Người dùng</label>
+                <InputSelect class="form-control" @bind-Value="Model.UserId">
+                    <option value="">Chọn người dùng</option>
+                    @foreach (var user in Users)
+                    {
+                        <option value="@user.ID">@user.Username</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.UserId" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/department">Trở về</a>
+
+    </div>
+</EditForm>

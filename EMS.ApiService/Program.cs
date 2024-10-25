@@ -80,6 +80,12 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+builder.Services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
+builder.Services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
+
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 var app = builder.Build();
