@@ -13,16 +13,16 @@ namespace EMS.BL.Services
 	{
 		Task<List<DepartmentModel>> GetDepartments();
 		Task<DepartmentModel> GetDepartment(int id);
-		Task UpdateDepartment(DepartmentDTO departmentDTO);
-		Task<DepartmentModel> CreateDepartment(DepartmentDTO departmentDTO);
+		Task UpdateDepartment(DepartmentDto departmentDto);
+		Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto);
 		Task<bool> DepartmentModelExists(int id);
 		Task DeleteDepartment(int id);
 	}
 	public class DepartmentService(IDepartmentRepository departmentRepository) : IDepartmentService
 	{
-		public Task<DepartmentModel> CreateDepartment(DepartmentDTO departmentDTO)
+		public Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto)
 		{
-			return departmentRepository.CreateDepartment(departmentDTO);
+			return departmentRepository.CreateDepartment(departmentDto);
 		}
 
 		public Task DeleteDepartment(int id)
@@ -45,9 +45,9 @@ namespace EMS.BL.Services
 			return departmentRepository.GetDepartments();
 		}
 
-		public Task UpdateDepartment(DepartmentDTO departmentDTO)
+		public Task UpdateDepartment(DepartmentDto departmentDto)
 		{
-			return departmentRepository.UpdateDepartment(departmentDTO);
+			return departmentRepository.UpdateDepartment(departmentDto);
 		}
 	}
 }

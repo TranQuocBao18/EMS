@@ -12,7 +12,7 @@ namespace EMS.Web.Components.Pages.Department
 		[Parameter]
 		public int ID { get; set; }
 		public DepartmentModel Model { get; set; } = new();
-		public DepartmentDTO ModelDTO { get; set; } = new();
+		public DepartmentDto ModelDTO { get; set; } = new();
 
 		[Inject]
 		private ApiClient ApiClient { get; set; }
@@ -35,7 +35,7 @@ namespace EMS.Web.Components.Pages.Department
 		{
 			ModelDTO.ID = Model.ID;
 			ModelDTO.DepartmentName = Model.DepartmentName;
-			var res = await ApiClient.PutAsync<BaseResponseModel, DepartmentDTO>($"/api/Department/{ID}", ModelDTO);
+			var res = await ApiClient.PutAsync<BaseResponseModel, DepartmentDto>($"/api/Department/{ID}", ModelDTO);
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Cập nhật phòng/khoa thành công!");

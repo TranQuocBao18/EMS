@@ -86,6 +86,9 @@ builder.Services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
+builder.Services.AddScoped<IRotatingRequestService, RotatingRequestService>();
+builder.Services.AddScoped<IRotatingRequestRepository, RotatingRequestRepository>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 var app = builder.Build();

@@ -31,21 +31,21 @@ namespace EMS.ApiService.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<DepartmentModel>> CreateDepartment(DepartmentDTO departmentDTO)
+		public async Task<ActionResult<DepartmentModel>> CreateDepartment(DepartmentDto departmentDto)
 		{
-			await departmentService.CreateDepartment(departmentDTO);
+			await departmentService.CreateDepartment(departmentDto);
 			return Ok(new BaseResponseModel { Success = true });
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateDepartment(int id, DepartmentDTO departmentDTO)
+		public async Task<IActionResult> UpdateDepartment(int id, DepartmentDto departmentDto)
 		{
-			if (id != departmentDTO.ID || !await departmentService.DepartmentModelExists(id))
+			if (id != departmentDto.ID || !await departmentService.DepartmentModelExists(id))
 			{
 				return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Bad request" });
 			}
 
-			await departmentService.UpdateDepartment(departmentDTO);
+			await departmentService.UpdateDepartment(departmentDto);
 			return Ok(new BaseResponseModel { Success = true });
 		}
 

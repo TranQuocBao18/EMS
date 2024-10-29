@@ -14,19 +14,19 @@ namespace EMS.BL.Repositories
 	{
 		Task<List<DepartmentModel>> GetDepartments();
 		Task<DepartmentModel> GetDepartment(int id);
-		Task UpdateDepartment(DepartmentDTO departmentDTO);
-		Task<DepartmentModel> CreateDepartment(DepartmentDTO departmentDTO);
+		Task UpdateDepartment(DepartmentDto departmentDto);
+		Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto);
 		Task<bool> DepartmentModelExists(int id);
 		Task DeleteDepartment(int id);
 	}
 	public class DepartmentRepository(AppDbContext dbContext) : IDepartmentRepository
 	{
-		public async Task<DepartmentModel> CreateDepartment(DepartmentDTO departmentDTO)
+		public async Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto)
 		{
-			// Tạo một đối tượng DepartmentModel từ DepartmentDTO
+			// Tạo một đối tượng DepartmentModel từ DepartmentDto
 			var departmentModel = new DepartmentModel
 			{
-				DepartmentName = departmentDTO.DepartmentName
+				DepartmentName = departmentDto.DepartmentName
 			};
 			dbContext.Departments.Add(departmentModel);
 			await dbContext.SaveChangesAsync();
@@ -55,15 +55,15 @@ namespace EMS.BL.Repositories
 			return dbContext.Departments.ToListAsync();
 		}
 
-		public async Task UpdateDepartment(DepartmentDTO departmentDTO)
+		public async Task UpdateDepartment(DepartmentDto departmentDto)
 		{
-			var departmentModel = await dbContext.Departments.FindAsync(departmentDTO.ID);
+			var departmentModel = await dbContext.Departments.FindAsync(departmentDto.ID);
 			if (departmentModel == null)
 			{
 				throw new Exception("Department not found.");
 			}
 
-			departmentModel.DepartmentName = departmentDTO.DepartmentName;
+			departmentModel.DepartmentName = departmentDto.DepartmentName;
 
 			dbContext.Entry(departmentModel).State = EntityState.Modified;
 			await dbContext.SaveChangesAsync();

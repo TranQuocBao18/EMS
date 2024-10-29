@@ -8,7 +8,7 @@ namespace EMS.Web.Components.Pages.Department
 {
     public partial class CreateDepartment
     {
-		public DepartmentDTO Model { get; set; } = new();
+		public DepartmentDto Model { get; set; } = new();
 
 		[Inject]
 		private ApiClient ApiClient { get; set; }
@@ -19,7 +19,7 @@ namespace EMS.Web.Components.Pages.Department
 
 		public async Task Submit()
 		{
-			var res = await ApiClient.PostAsync<BaseResponseModel, DepartmentDTO>("/api/Department", Model);
+			var res = await ApiClient.PostAsync<BaseResponseModel, DepartmentDto>("/api/Department", Model);
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Tạo phòng/khoa thành công!");

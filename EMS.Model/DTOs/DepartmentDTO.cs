@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Model.DTOs
 {
-	public class DepartmentDTO
+	public class DepartmentDto
 	{
 		public int ID { get; set; }
 		public string DepartmentName { get; set; }
