@@ -1,0 +1,44 @@
+﻿@page "/rotating/ownrequest/create"
+@rendermode InteractiveServer
+
+<h3>CreateRotatingRequest</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="CreateRotatingRequest" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Loại thiết bị</label>
+                <InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
+                    <option value="">Chọn loại thiết bị</option>
+                    @foreach (var equipmentType in EquipmentTypes)
+                    {
+                        <option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.EquipmentTypeId" />
+            </div>
+            <div class="col-md-6">
+                <label> Phòng/khoa</label>
+                <InputSelect class="form-control" @bind-Value="Model.DepartmentId">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var department in Departments)
+                    {
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.DepartmentId" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Lý do</label>
+                <InputText class="form-control" @bind-Value="Model.RequestReason" />
+                <ValidationMessage For="() => Model.RequestReason" />
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</EditForm>
+

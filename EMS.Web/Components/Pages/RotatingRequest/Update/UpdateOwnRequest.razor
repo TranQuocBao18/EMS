@@ -1,0 +1,43 @@
+﻿@page "/rotating/ownrequest/update/{ID:int}"
+@rendermode InteractiveServer
+
+<h3>UpdateOwnRequest</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="UpdateOwnRequest" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Loại thiết bị</label>
+                <InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
+                    <option value="">Chọn loại thiết bị</option>
+                    @foreach (var equipmentType in EquipmentTypes)
+                    {
+                        <option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.EquipmentTypeId" />
+            </div>
+            <div class="col-md-6">
+                <label> Phòng/khoa</label>
+                <InputSelect class="form-control" @bind-Value="Model.DepartmentId">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var department in Departments)
+                    {
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.DepartmentId" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Lý do</label>
+                <InputText class="form-control" @bind-Value="Model.RequestReason" />
+                <ValidationMessage For="() => Model.RequestReason" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Lưu</button>
+        <a class="btn btn-secondary" href="/rotating/ownrequest">Trở về</a>
+    </div>
+</EditForm>

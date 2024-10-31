@@ -1,0 +1,46 @@
+﻿@page "/rotating/requestapproved"
+<h3>IndexRequestApproved</h3>
+
+@if (RotatingRequestModels == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/requestlv1/create">Create</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Người tạo</th>
+                <th>Loại thiết bị</th>
+                <th>Khoa/phòng</th>
+                <th>Lý do yêu cầu</th>
+                <th>Người duyệt cấp 2</th>
+                <th>Lý do chấp nhận</th>
+                <th>Người duyệt cấp 3</th>
+                <th>Lý do chấp nhận</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rotatingRequest in RotatingRequestModels)
+            {
+                <tr>
+                    <td>@rotatingRequest.ID</td>
+                    <td>@rotatingRequest.User.Username</td>
+                    <td>@rotatingRequest.EquipmentType.EquipmentTypeName</td>
+                    <td>@rotatingRequest.Department.DepartmentName</td>
+                    <td>@rotatingRequest.RequestReason</td>
+                    <td>@rotatingRequest.ReviewerLv2.Username</td>
+                    <td>@rotatingRequest.ReasonLv2</td>
+                    <td>@rotatingRequest.ReviewerLv3.Username</td>
+                    <td>@rotatingRequest.ReasonLv3</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/requestlv1/update/@rotatingRequest.ID">Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

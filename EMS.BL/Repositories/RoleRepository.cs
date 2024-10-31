@@ -15,9 +15,9 @@ namespace EMS.BL.Repositories
 	}
 	public class RoleRepository(AppDbContext dbContext) :IRoleRepository
 	{
-		public Task<List<RoleModel>> GetRoles()
+		public async Task<List<RoleModel>> GetRoles()
 		{
-			return dbContext.Roles.ToListAsync();
+			return await dbContext.Roles.ToListAsync();
 		}
 	}
 }

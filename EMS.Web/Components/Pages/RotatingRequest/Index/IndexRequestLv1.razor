@@ -1,0 +1,40 @@
+﻿@page "/rotating/requestlv1"
+<h3>IndexRequestLv1</h3>
+
+@if (RotatingRequestModels == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/requestlv1/create">Create</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Người tạo</th>
+                <th>Loại thiết bị</th>
+                <th>Khoa/phòng</th>
+                <th>Lý do yêu cầu</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rotatingRequest in RotatingRequestModels)
+            {
+                <tr>
+                    <td>@rotatingRequest.ID</td>
+                    <td>@rotatingRequest.User.Username</td>
+                    <td>@rotatingRequest.EquipmentType.EquipmentTypeName</td>
+                    <td>@rotatingRequest.Department.DepartmentName</td>
+                    <td>@rotatingRequest.RequestReason</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/requestlv1/update/@rotatingRequest.ID">Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+}

@@ -17,7 +17,7 @@ namespace EMS.ApiService.Controllers
         public async Task<ActionResult<RotatingRequestModel>> CreateRequest(RotatingRequestModel request)
         {
             await rotatingRequestService.CreateRequest(request);
-            return Ok(new { message = "Request created successfully" });
+            return Ok(new BaseResponseModel { Success = true, ErrorMessage = "Request created successfully" });
         }
 
         [HttpGet("lv2/pending")]
@@ -77,6 +77,41 @@ namespace EMS.ApiService.Controllers
         {
             var request = await rotatingRequestService.CompleteRequest(dto);
 
+            return Ok(new BaseResponseModel { Success = true });
+        }
+
+        [HttpGet("own/{id}")]
+        public async Task<ActionResult<RotatingRequestModel>> GetRequestsByUserId(int id)
+        {
+            var requests = await rotatingRequestService.GetRequestsByUserId(id);
+            if (requests == null)
+            {
+                return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Not Found" });
+            }
+
+            return Ok(new BaseResponseModel { Success = true, Data = requests });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequest(int id)
+        {
+            if (!await rotatingRequestService.RotatingRequestModelExists(id))
+            {
+                return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Not Found" });
+            }
+            await rotatingRequestService.DeleteRequest(id);
+            return Ok(new BaseResponseModel { Success = true });
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRequest(int id, RotatingRequestModel rotatingRequestModel)
+        {
+            if (id != rotatingRequestModel.ID || !await rotatingRequestService.RotatingRequestModelExists(id))
+            {
+                return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Bad request" });
+            }
+
+            await rotatingRequestService.UpdateRequest(rotatingRequestModel);
             return Ok(new BaseResponseModel { Success = true });
         }
     }

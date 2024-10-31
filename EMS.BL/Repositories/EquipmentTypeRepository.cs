@@ -35,19 +35,19 @@ namespace EMS.BL.Repositories
 			await dbContext.SaveChangesAsync();
 		}
 
-		public Task<bool> EquipmentTypeModelExists(int id)
+		public async Task<bool> EquipmentTypeModelExists(int id)
 		{
-			return dbContext.EquipmentTypes.AnyAsync(e => e.ID == id);
+			return await dbContext.EquipmentTypes.AnyAsync(e => e.ID == id);
 		}
 
-		public Task<EquipmentTypeModel> GetEquipmentType(int id)
+		public async Task<EquipmentTypeModel> GetEquipmentType(int id)
 		{
-			return dbContext.EquipmentTypes.FirstOrDefaultAsync(n => n.ID == id);
+			return await dbContext.EquipmentTypes.FirstOrDefaultAsync(n => n.ID == id);
 		}
 
-		public Task<List<EquipmentTypeModel>> GetEquipmentTypes()
+		public async Task<List<EquipmentTypeModel>> GetEquipmentTypes()
 		{
-			return dbContext.EquipmentTypes.ToListAsync();
+			return await dbContext.EquipmentTypes.ToListAsync();
 		}
 
 		public async Task UpdateEquipmentType(EquipmentTypeModel equipmentType)

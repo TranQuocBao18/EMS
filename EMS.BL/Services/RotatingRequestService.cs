@@ -14,12 +14,15 @@ namespace EMS.BL.Services
         Task<RotatingRequestModel> CreateRequest(RotatingRequestModel request);
         Task<List<RotatingRequestModel>> GetPendingRequestsLv2();
         Task<RotatingRequestModel> GetRequest(int id);
+        Task<List<RotatingRequestModel>> GetRequestsByUserId(int id);
         Task<RotatingRequestModel> ApproveRequestLv2(ApproveRequestDto dto);
         Task<List<RotatingRequestModel>> GetPendingRequestsLv3();
         Task<RotatingRequestModel> ApproveRequestLv3(ApproveRequestDto dto);
         Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto);
         Task<List<RotatingRequestModel>> GetApprovedRequest();
-
+        Task<bool> RotatingRequestModelExists(int id);
+        Task UpdateRequest(RotatingRequestModel rotatingRequestModel);
+        Task DeleteRequest(int id);
     }
     public class RotatingRequestService(IRotatingRequestRepository rotatingRequestRepository) : IRotatingRequestService
     {
@@ -61,6 +64,26 @@ namespace EMS.BL.Services
         public Task<List<RotatingRequestModel>> GetApprovedRequest()
         {
             return rotatingRequestRepository.GetApprovedRequest();
+        }
+
+        public Task<List<RotatingRequestModel>> GetRequestsByUserId(int id)
+        {
+            return rotatingRequestRepository.GetRequestsByUserId(id);
+        }
+
+        public Task<bool> RotatingRequestModelExists(int id)
+        {
+            return rotatingRequestRepository.RotatingRequestModelExists(id);
+        }
+
+        public Task DeleteRequest(int id)
+        {
+            return rotatingRequestRepository.DeleteRequest(id);
+        }
+
+        public Task UpdateRequest(RotatingRequestModel rotatingRequestModel)
+        {
+            return rotatingRequestRepository.UpdateRequest(rotatingRequestModel);
         }
     }
 }

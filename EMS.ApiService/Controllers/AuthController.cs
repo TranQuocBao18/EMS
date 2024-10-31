@@ -99,6 +99,7 @@ namespace EMS.ApiService.Controllers
 		{
 			var claims = new List<Claim>()
 			{
+				new Claim("UserId", user.ID.ToString()),
 				new Claim(ClaimTypes.Name, user.Username),
 			};
 			claims.AddRange(user.UserRoles.Select(n => new Claim(ClaimTypes.Role, n.Role.RoleName)));

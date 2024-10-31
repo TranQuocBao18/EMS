@@ -40,19 +40,19 @@ namespace EMS.BL.Repositories
 			await dbContext.SaveChangesAsync();
 		}
 
-		public Task<bool> DepartmentModelExists(int id)
+		public async Task<bool> DepartmentModelExists(int id)
 		{
-			return dbContext.Departments.AnyAsync(e => e.ID == id);
+			return await dbContext.Departments.AnyAsync(e => e.ID == id);
 		}
 
-		public Task<DepartmentModel> GetDepartment(int id)
+		public async Task<DepartmentModel> GetDepartment(int id)
 		{
-			return dbContext.Departments.FirstOrDefaultAsync(n => n.ID == id);
+			return await dbContext.Departments.FirstOrDefaultAsync(n => n.ID == id);
 		}
 
-		public Task<List<DepartmentModel>> GetDepartments()
+		public async Task<List<DepartmentModel>> GetDepartments()
 		{
-			return dbContext.Departments.ToListAsync();
+			return await dbContext.Departments.ToListAsync();
 		}
 
 		public async Task UpdateDepartment(DepartmentDto departmentDto)

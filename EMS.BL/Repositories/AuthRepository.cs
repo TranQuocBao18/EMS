@@ -51,9 +51,9 @@ namespace EMS.BL.Repositories
 			await dbContext.SaveChangesAsync();
 		}
 
-		public Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken)
+		public async Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken)
 		{
-			return dbContext.RefreshTokens.Include(n => n.User).ThenInclude(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.RefreshToken == refreshToken);
+			return await dbContext.RefreshTokens.Include(n => n.User).ThenInclude(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.RefreshToken == refreshToken);
 		}
 		public async Task<UserModel> CreateUser(string username, string password, List<int> roleIds)
 		{

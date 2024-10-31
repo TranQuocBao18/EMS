@@ -61,14 +61,14 @@ namespace EMS.BL.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public Task<UserModel> GetUser(int id)
+        public async Task<UserModel> GetUser(int id)
         {
-            return dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.ID == id);
+            return await dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.ID == id);
         }
 
-        public Task<List<UserModel>> GetUsers()
+        public async Task<List<UserModel>> GetUsers()
         {
-            return dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).ToListAsync();
+            return await dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).ToListAsync();
         }
 
         public async Task<bool> ToggleUserLockStatus(string username)
@@ -112,9 +112,9 @@ namespace EMS.BL.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public Task<bool> UserModelExists(int id)
+        public async Task<bool> UserModelExists(int id)
         {
-            return dbContext.Users.AnyAsync(e => e.ID == id);
+            return await dbContext.Users.AnyAsync(e => e.ID == id);
         }
     }
 }
