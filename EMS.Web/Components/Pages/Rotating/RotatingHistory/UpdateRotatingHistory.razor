@@ -1,0 +1,96 @@
+﻿@page "/rotating/history/update/{ID:int}"
+@rendermode InteractiveServer
+
+<h3>UpdateRotatingHistory</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="UpdateRotatingHistory" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>ID</label>
+                <InputNumber class="form-control" @bind-Value="Model.ID" />
+                <ValidationMessage For="() => Model.ID" />
+            </div>
+            <div class="col-md-6">
+                <label>Người yêu cầu</label>
+                <InputSelect class="form-control" @bind-Value="Model.RequestUserId">
+                    <option value="">Chọn người dùng</option>
+                    @foreach (var requestUser in RequestUser)
+                    {
+                        <option value="@requestUser.ID">@requestUser.Username</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.RequestUserId" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Thiết bị</label>
+                <InputSelect class="form-control" @bind-Value="Model.EquipmentId">
+                    <option value="">Chọn loại thiết bị</option>
+                    @foreach (var equipment in Equipments)
+                    {
+                        <option value="@equipment.ID">@equipment.EquipmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.EquipmentId" />
+            </div>
+            <div class="col-md-6">
+                <label>Thiết bị</label>
+                <InputDate class="form-control" @bind-Value="Model.RotatingDate" />
+                <ValidationMessage For="() => Model.RotatingDate" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Từ Phòng/khoa</label>
+                <InputSelect class="form-control" @bind-Value="Model.FromDepartmentId">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var department in FromDepartments)
+                    {
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.FromDepartmentId" />
+            </div>
+            <div class="col-md-6">
+                <label>Đến Phòng/khoa</label>
+                <InputSelect class="form-control" @bind-Value="Model.ToDepartmentId">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var department in ToDepartments)
+                    {
+                        <option value="@department.ID">@department.DepartmentName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.ToDepartmentId" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Người duyệt Lv2</label>
+                <InputSelect class="form-control" @bind-Value="Model.ReviewerLv2Id">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var user in ReviewerLv2)
+                    {
+                        <option value="@user.ID">@user.Username</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.ReviewerLv2Id" />
+            </div>
+            <div class="col-md-6">
+                <label>Người duyệt Lv3</label>
+                <InputSelect class="form-control" @bind-Value="Model.ReviewerLv3Id">
+                    <option value="">Chọn phòng ban</option>
+                    @foreach (var user in ReviewerLv3)
+                    {
+                        <option value="@user.ID">@user.Username</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Model.ReviewerLv3Id" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Lưu</button>
+        <a class="btn btn-secondary" href="/rotating/history">Trở về</a>
+    </div>
+</EditForm>

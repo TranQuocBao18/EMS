@@ -1,0 +1,46 @@
+﻿@page "/rotating/history"
+
+<h3>IndexRotatingHistory</h3>
+
+@if (RotatingHistoryModels == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Người yêu cầu</th>
+                <th>Thiết bị</th>
+                <th>Ngày luân chuyển</th>
+                <th>Từ Phòng/khoa</th>
+                <th>Đến Phòng/khoa</th>
+                <th>Người duyệt Lv2</th>
+                <th>Người duyệt Lv3</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rotatingHistory in RotatingHistoryModels)
+            {
+                <tr>
+                    <td>@rotatingHistory.ID</td>
+                    <td>@rotatingHistory.RequestUser.Username</td>
+                    <td>@rotatingHistory.Equipment.EquipmentName</td>
+                    <td>@rotatingHistory.RotatingDate</td>
+                    <td>@rotatingHistory.FromDepartment.DepartmentName</td>
+                    <td>@rotatingHistory.ToDepartment.DepartmentName</td>
+                    <td>@rotatingHistory.ReviewerLv2.Username</td>
+                    <td>@rotatingHistory.ReviewerLv3.Username</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/rotating/history/update/@rotatingHistory.ID">Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}

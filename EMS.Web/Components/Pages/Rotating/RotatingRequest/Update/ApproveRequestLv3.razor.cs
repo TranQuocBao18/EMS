@@ -1,23 +1,25 @@
 ﻿using Blazored.Toast.Services;
-using System.Security.Claims;
+using EMS.Model.DTOs;
 using EMS.Model.Entities;
 using EMS.Model.Models.Others;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Newtonsoft.Json;
-using EMS.Web.Components.BaseComponents;
+using Microsoft.AspNetCore.Components;
+using System.Security.Claims;
 
-namespace EMS.Web.Components.Pages.RotatingRequest.Index
+namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 {
-    public partial class IndexOwnRequest
+    public partial class ApproveRequestLv3
     {
+        [Parameter]
+        public int ID { get; set; }
+        public ApproveRequestDto Model { get; set; } = new();
+
         [Inject]
-        public ApiClient ApiClient { get; set; }
-        public List<RotatingRequestModel> OwnRotatingRequestModels { get; set; }
+        private ApiClient ApiClient { get; set; }
         [Inject]
-        public IToastService ToastService { get; set; }
-        public AppModal Modal { get; set; }
-        public int DeleteID { get; set; }
+        private IToastService ToastService { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         public UserModel User { get; set; } = new UserModel();
         [Inject]
         public AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -26,7 +28,7 @@ namespace EMS.Web.Components.Pages.RotatingRequest.Index
         {
             await base.OnInitializedAsync();
             await LoadUserFromToken();
-            await LoadRotatingRequest();
+            Model.RequestId = ID;
         }
 
         protected async Task LoadUserFromToken()
@@ -45,24 +47,14 @@ namespace EMS.Web.Components.Pages.RotatingRequest.Index
                 ToastService.ShowError("Không thể lấy thông tin người dùng.");
             }
         }
-
-        protected async Task LoadRotatingRequest()
+        public async Task Submit()
         {
-            var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/RotatingRequest/own/{User.ID}");
+            Model.ReviewerId = User.ID;
+            var res = await ApiClient.PostAsync<BaseResponseModel, ApproveRequestDto>($"/api/RotatingRequest/lv3/approve", Model);
             if (res != null && res.Success)
             {
-                OwnRotatingRequestModels = JsonConvert.DeserializeObject<List<RotatingRequestModel>>(res.Data.ToString());
-            }
-        }
-
-        protected async Task HandleDelete()
-        {
-            var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/RotatingRequest/{DeleteID}");
-            if (res != null && res.Success)
-            {
-                ToastService.ShowSuccess("Xoá yêu cầu hoàn tất");
-                await LoadRotatingRequest();
-                Modal.Close();
+                ToastService.ShowSuccess("Duyệt yêu cầu thành công!");
+                NavigationManager.NavigateTo("/rotating/requestlv2");
             }
         }
     }

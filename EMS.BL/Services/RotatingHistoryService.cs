@@ -12,9 +12,17 @@ namespace EMS.BL.Services
     {
         Task<List<RotatingHistoryModel>> GetRotatingHistories();
         Task<RotatingHistoryModel> GetRotatingHistory(int id);
+        Task<bool> RotatingHistoryModelExists(int id);
+        Task UpdateRotatingHistory(RotatingHistoryModel rotatingHistoryModel);
+        Task DeleteRotatingHistory(int id);
     }
     public class RotatingHistoryService(IRotatingHistoryRepository rotatingHistoryRepository) : IRotatingHistoryService
     {
+        public Task DeleteRotatingHistory(int id)
+        {
+            return rotatingHistoryRepository.DeleteRotatingHistory(id);
+        }
+
         public Task<List<RotatingHistoryModel>> GetRotatingHistories()
         {
             return rotatingHistoryRepository.GetRotatingHistories();
@@ -23,6 +31,16 @@ namespace EMS.BL.Services
         public Task<RotatingHistoryModel> GetRotatingHistory(int id)
         {
             return rotatingHistoryRepository.GetRotatingHistory(id);
+        }
+
+        public Task<bool> RotatingHistoryModelExists(int id)
+        {
+            return rotatingHistoryRepository.RotatingHistoryModelExists(id);
+        }
+
+        public Task UpdateRotatingHistory(RotatingHistoryModel rotatingHistoryModel)
+        {
+            return rotatingHistoryRepository.UpdateRotatingHistory(rotatingHistoryModel);
         }
     }
 }

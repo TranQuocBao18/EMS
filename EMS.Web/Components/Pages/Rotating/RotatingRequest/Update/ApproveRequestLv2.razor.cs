@@ -1,16 +1,19 @@
 ﻿using System.Security.Claims;
 using Blazored.Toast.Services;
+using EMS.Model.DTOs;
 using EMS.Model.Entities;
 using EMS.Model.Models.Others;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
 
-namespace EMS.Web.Components.Pages.RotatingRequest.Create
+namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 {
-    public partial class CreateRotatingRequest
+    public partial class ApproveRequestLv2
     {
-        public RotatingRequestModel Model { get; set; } = new();
+        [Parameter]
+        public int ID { get; set; }
+        public ApproveRequestDto Model { get; set; } = new();
 
         [Inject]
         private ApiClient ApiClient { get; set; }
@@ -18,8 +21,6 @@ namespace EMS.Web.Components.Pages.RotatingRequest.Create
         private IToastService ToastService { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
-        private List<DepartmentModel> Departments { get; set; } = new();
-        private List<EquipmentTypeModel> EquipmentTypes { get; set; } = new();
         public UserModel User { get; set; } = new UserModel();
         [Inject]
         public AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -28,19 +29,7 @@ namespace EMS.Web.Components.Pages.RotatingRequest.Create
         {
             await base.OnInitializedAsync();
             await LoadUserFromToken();
-
-            var DepartmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Department");
-            if (DepartmentsRes != null && DepartmentsRes.Success)
-            {
-                Departments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
-            }
-
-            var EquipmentTypesRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/EquipmentType");
-            if (EquipmentTypesRes != null && EquipmentTypesRes.Success)
-            {
-                EquipmentTypes = JsonConvert.DeserializeObject<List<EquipmentTypeModel>>(EquipmentTypesRes.Data.ToString());
-            }
-
+            Model.RequestId = ID;
         }
 
         protected async Task LoadUserFromToken()
@@ -59,15 +48,14 @@ namespace EMS.Web.Components.Pages.RotatingRequest.Create
                 ToastService.ShowError("Không thể lấy thông tin người dùng.");
             }
         }
-
         public async Task Submit()
         {
-            Model.UserId = User.ID;
-            var res = await ApiClient.PostAsync<BaseResponseModel, RotatingRequestModel>("/api/RotatingRequest/create", Model);
+            Model.ReviewerId = User.ID;
+            var res = await ApiClient.PostAsync<BaseResponseModel, ApproveRequestDto>($"/api/RotatingRequest/lv2/approve", Model);
             if (res != null && res.Success)
             {
-                ToastService.ShowSuccess("Tạo yêu cầu thành công!");
-                NavigationManager.NavigateTo("/rotating/ownrequest");
+                ToastService.ShowSuccess("Duyệt yêu cầu thành công!");
+                NavigationManager.NavigateTo("/rotating/requestlv1");
             }
         }
     }

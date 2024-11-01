@@ -1,0 +1,44 @@
+﻿@page "/rotating/requestlv2/approve/{ID:int}"
+@rendermode InteractiveServer
+
+<h3>ApproveRequestLv3</h3>
+
+<EditForm OnValidSubmit="Submit" FormName="ApproveRequestLv2" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> ID </label>
+                <InputNumber class="form-control" @bind-Value="Model.RequestId" />
+                <ValidationMessage For="() => Model.RequestId" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label> Acceptance Status</label>
+            </div>
+            <div class="col-md-6">
+                <InputRadioGroup @bind-Value="Model.AcceptanceStatus">
+                    <div class="form-check">
+                        <InputRadio class="form-check-input" Value="true" id="yesOption" />
+                        <label for="yesOption" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <InputRadio class="form-check-input" Value="false" id="noOption" />
+                        <label for="noOption" class="form-check-label">No</label>
+                    </div>
+                </InputRadioGroup>
+                <ValidationMessage For="() => Model.AcceptanceStatus" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Reason (if rejected)</label>
+                <InputText class="form-control" @bind-Value="Model.Reason" />
+                <ValidationMessage For="() => Model.Reason" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Lưu</button>
+        <a class="btn btn-secondary" href="/rotating/requestlv2">Trở về</a>
+    </div>
+</EditForm>
