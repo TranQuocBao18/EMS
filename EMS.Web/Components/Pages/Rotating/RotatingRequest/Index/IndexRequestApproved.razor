@@ -1,45 +1,83 @@
 ﻿@page "/rotating/approved"
-<h3>IndexRequestApproved</h3>
 
 @if (RotatingRequestModels == null)
 {
-    <p>Loading ...</p>
+	<p>Loading ...</p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Người tạo</th>
-                <th>Loại thiết bị</th>
-                <th>Khoa/phòng</th>
-                <th>Lý do yêu cầu</th>
-                <th>Người duyệt cấp 2</th>
-                <th>Lý do chấp nhận</th>
-                <th>Người duyệt cấp 3</th>
-                <th>Lý do chấp nhận</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var rotatingRequest in RotatingRequestModels)
-            {
-                <tr>
-                    <td>@rotatingRequest.ID</td>
-                    <td>@rotatingRequest.User.Username</td>
-                    <td>@rotatingRequest.EquipmentType.EquipmentTypeName</td>
-                    <td>@rotatingRequest.Department.DepartmentName</td>
-                    <td>@rotatingRequest.RequestReason</td>
-                    <td>@rotatingRequest.ReviewerLv2.Username</td>
-                    <td>@rotatingRequest.ReasonLv2</td>
-                    <td>@rotatingRequest.ReviewerLv3.Username</td>
-                    <td>@rotatingRequest.ReasonLv3</td>
-                    <td>
-                        <a class="btn btn-secondary" href="/rotating/approved/rotate/@rotatingRequest.ID">Luân chuyển</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Yêu cầu luân chuyển đã hoàn thành phê duyệt</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Yêu cầu luân chuyển đã phê duyệt</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Yêu cầu luân chuyển đã hoàn thành phê duyệt</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Người tạo</th>
+										<th>Loại thiết bị</th>
+										<th>Khoa/phòng</th>
+										<th>Lý do yêu cầu</th>
+										<th>Người duyệt cấp 2</th>
+										<th>Lý do chấp nhận</th>
+										<th>Người duyệt cấp 3</th>
+										<th>Lý do chấp nhận</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var rotatingRequest in RotatingRequestModels)
+									{
+										<tr>
+											<td>@rotatingRequest.ID</td>
+											<td>@rotatingRequest.User.Username</td>
+											<td>@rotatingRequest.EquipmentType.EquipmentTypeName</td>
+											<td>@rotatingRequest.Department.DepartmentName</td>
+											<td>@rotatingRequest.RequestReason</td>
+											<td>@rotatingRequest.ReviewerLv2.Username</td>
+											<td>@rotatingRequest.ReasonLv2</td>
+											<td>@rotatingRequest.ReviewerLv3.Username</td>
+											<td>@rotatingRequest.ReasonLv3</td>
+											<td>
+												<a class="btn btn-secondary" href="/rotating/approved/rotate/@rotatingRequest.ID">Luân chuyển</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
 }

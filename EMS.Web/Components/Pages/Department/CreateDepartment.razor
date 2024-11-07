@@ -1,20 +1,40 @@
 ﻿@page "/department/create"
 @rendermode InteractiveServer
 
-<h3>CreateDepartment</h3>
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Tạo Phòng/Khoa</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/department">Phòng/Khoa</a></li>
+					<li class="breadcrumb-item active">Tạo mới</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
 
-<EditForm OnValidSubmit="Submit" FormName="CreateDepartment" Model="Model">
-    <DataAnnotationsValidator />
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-6">
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Phòng/Khoa</h3>
+	</div>
+    <EditForm OnValidSubmit="Submit" FormName="CreateDepartment" Model="Model">
+        <DataAnnotationsValidator />
+        <div class="card-body">
+            <div class="form-group">
                 <label> Tên phòng/khoa</label>
                 <InputText class="form-control" @bind-Value="Model.DepartmentName" />
                 <ValidationMessage For="() => Model.DepartmentName" />
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-secondary" href="/department">Trở về</a>
+        <div class="card-footer">
+			<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+            <a class="btn btn-secondary" href="/department">Trở về</a>
+        </div>
+    </EditForm>
+</div>
 
-    </div>
-</EditForm>

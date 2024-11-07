@@ -1,6 +1,5 @@
 ﻿@page "/user"
 @using EMS.Web.Components.BaseComponents
-<h3>IndexUser</h3>
 
 @if (UserModels == null)
 {
@@ -8,43 +7,83 @@
 }
 else
 {
-	<AuthorizeView Roles="Lv1">
-		<Authorized>
-			<a class="btn btn-primary" href="/user/register">Tạo người dùng</a>
-		</Authorized>
-	</AuthorizeView>
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Người dùng</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Người dùng</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Tên tài khoản</th>
-				<th>Vai trò</th>
-				<th>Khoá</th>
-				<th>Hành động</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var user in UserModels)
-			{
-				<tr>
-					<td>@user.Username</td>
-					<td>
-						@foreach (var role in user.UserRoles)
-						{
-							<span>@role.Role.RoleName</span>
-							<br />
-						}
-					</td>
-					<td>@user.IsLock</td>
-					<td>
-						<a class="btn btn-secondary" href="/user/update/@user.ID">Cập nhật</a>
-						<button class="btn btn-danger" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Xoá</button>
-						<button class="btn btn-primary" @onclick="()=>{ UserName = user.Username; LockModal.Open();}">Khoá/Mở khoá</button>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Danh sách Người dùng</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<p>
+								<AuthorizeView Roles="Lv1">
+									<Authorized>
+										<a class="btn btn-primary" href="/user/register">Tạo người dùng</a>
+									</Authorized>
+								</AuthorizeView>
+							</p>
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Tên tài khoản</th>
+										<th>Vai trò</th>
+										<th>Khoá</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var user in UserModels)
+									{
+										<tr>
+											<td>@user.Username</td>
+											<td>
+												@foreach (var role in user.UserRoles)
+												{
+													<span>@role.Role.RoleName</span>
+													<br />
+												}
+											</td>
+											<td>@user.IsLock</td>
+											<td>
+												<a class="btn btn-primary mr-1" href="/user/update/@user.ID">Cập nhật</a>
+												<button class="btn btn-danger mr-1" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Xoá</button>
+												<button class="btn btn-secondary" @onclick="()=>{ UserName = user.Username; LockModal.Open();}">Khoá/Mở khoá</button>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
 
 	<AppModal @ref="Modal">
 		<Title>Notification</Title>

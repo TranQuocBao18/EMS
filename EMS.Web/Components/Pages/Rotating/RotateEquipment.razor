@@ -1,53 +1,75 @@
 ﻿@page "/rotating/approved/rotate/{ID:int}"
 
-<h3>RotateEquipment</h3>
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Luân chuyển thiết bị</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/rotating/approved">Yêu cầu luân chuyển đã hoàn thành phê duyệt</a></li>
+					<li class="breadcrumb-item active">Luân chuyển thiết bị</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
 
-<EditForm OnValidSubmit="Submit" FormName="RotateEquipment" Model="Model">
-    <DataAnnotationsValidator />
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>ID</label>
-                <InputNumber class="form-control" @bind-Value="Model.RequestId" />
-                <ValidationMessage For="() => Model.RequestId" />
-            </div>
-            <div class="col-md-6">
-                <label>Thiết bị</label>
-                <InputSelect class="form-control" @bind-Value="Model.EquipmentId">
-                    <option value="">Chọn loại thiết bị</option>
-                    @foreach (var equipment in Equipments)
-                    {
-                        <option value="@equipment.ID">@equipment.EquipmentName</option>
-                    }
-                </InputSelect>
-                <ValidationMessage For="() => Model.EquipmentId" />
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Từ Phòng/khoa</label>
-                <InputSelect class="form-control" @bind-Value="Model.OldDepartmentId">
-                    <option value="">Chọn phòng ban</option>
-                    @foreach (var department in OldDepartments)
-                    {
-                        <option value="@department.ID">@department.DepartmentName</option>
-                    }
-                </InputSelect>
-                <ValidationMessage For="() => Model.OldDepartmentId" />
-            </div>
-            <div class="col-md-6">
-                <label>Đến Phòng/khoa</label>
-                <InputSelect class="form-control" @bind-Value="Model.NewDepartmentId">
-                    <option value="">Chọn phòng ban</option>
-                    @foreach (var department in NewDepartments)
-                    {
-                        <option value="@department.ID">@department.DepartmentName</option>
-                    }
-                </InputSelect>
-                <ValidationMessage For="() => Model.NewDepartmentId" />
-            </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Lưu</button>
-        <a class="btn btn-secondary" href="/rotating/approved">Trở về</a>
-    </div>
-</EditForm>
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Luân chuyển thiết bị</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="RotateEquipment" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>ID</label>
+					<InputNumber class="form-control" @bind-Value="Model.RequestId" disabled="true" />
+					<ValidationMessage For="() => Model.RequestId" />
+				</div>
+				<div class="col-md-6">
+					<label>Thiết bị</label>
+					<InputSelect class="form-control" @bind-Value="Model.EquipmentId">
+						<option value="">Chọn loại thiết bị</option>
+						@foreach (var equipment in Equipments)
+						{
+							<option value="@equipment.ID">@equipment.EquipmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.EquipmentId" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Từ Phòng/khoa</label>
+					<InputSelect class="form-control" @bind-Value="Model.OldDepartmentId">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var department in OldDepartments)
+						{
+							<option value="@department.ID">@department.DepartmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.OldDepartmentId" />
+				</div>
+				<div class="col-md-6">
+					<label>Đến Phòng/khoa</label>
+					<InputSelect class="form-control" @bind-Value="Model.NewDepartmentId">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var department in NewDepartments)
+						{
+							<option value="@department.ID">@department.DepartmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.NewDepartmentId" />
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/rotating/approved">Trở về</a>
+			</div>
+		</div>
+	</EditForm>
+</div>

@@ -1,7 +1,6 @@
 ﻿@page "/equipment"
 @using EMS.Web.Components.BaseComponents
 
-<h3>IndexEquipment</h3>
 
 @if (EquipmentModels == null)
 {
@@ -9,58 +8,98 @@
 }
 else
 {
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Thiết bị</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Thiết bị</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
 
-	<a class="btn btn-primary" href="/equipment/createequipment">Tạo thiết bị</a>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Tên thiết bị</th>
-				<th>Mã Model</th>
-				<th>Số Serial</th>
-				<th>Loại thiết bị</th>
-				<th>Giá</th>
-				<th>Ngày mua</th>
-				<th>Trạng thái</th>
-				<th>Ngày hết hạn</th>
-				<th>Phòng/khoa</th>
-				<th>Thuộc người dùng</th>
-				<th>Hành động</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var equipment in EquipmentModels)
-			{
-				<tr>
-					<td>@equipment.ID</td>
-					<td>@equipment.EquipmentName</td>
-					<td>@equipment.EquipmentModelCode</td>
-					<td>@equipment.EquipmentSerial</td>
-					<td>@equipment.EquipmentType?.EquipmentTypeName</td>
-					<td>@equipment.Price</td>
-					<td>@equipment.PurchaseDay</td>
-					<td>@equipment.Status</td>
-					<td>@equipment.ExpireDay</td>
-					<td>@equipment.Department?.DepartmentName</td>
-					<td>
-						@if (equipment.User==null)
-						{
-							<span>không có</span>
-						}
-						else
-						{
-							<span>@equipment.User?.Username</span>
-						}
-					</td>
-					<td>
-						<a class="btn btn-secondary" href="/equipment/update/@equipment.ID">Cập nhật</a>
-						<button class="btn btn-danger" @onclick="()=> { DeleteID = equipment.ID; Modal.Open();}">Xoá</button>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Danh sách Thiết bị</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<p>
+
+								<a class="btn btn-primary" href="/equipment/createequipment">Tạo thiết bị</a>
+							</p>
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Tên thiết bị</th>
+										<th>Mã Model</th>
+										<th>Số Serial</th>
+										<th>Loại thiết bị</th>
+										<th>Giá</th>
+										<th>Ngày mua</th>
+										<th>Trạng thái</th>
+										<th>Ngày hết hạn</th>
+										<th>Phòng/khoa</th>
+										<th>Thuộc người dùng</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var equipment in EquipmentModels)
+									{
+										<tr>
+											<td>@equipment.ID</td>
+											<td>@equipment.EquipmentName</td>
+											<td>@equipment.EquipmentModelCode</td>
+											<td>@equipment.EquipmentSerial</td>
+											<td>@equipment.EquipmentType?.EquipmentTypeName</td>
+											<td>@equipment.Price</td>
+											<td>@equipment.PurchaseDay</td>
+											<td>@equipment.Status</td>
+											<td>@equipment.ExpireDay</td>
+											<td>@equipment.Department?.DepartmentName</td>
+											<td>
+												@if (equipment.User == null)
+												{
+													<span>không có</span>
+												}
+												else
+												{
+													<span>@equipment.User?.Username</span>
+												}
+											</td>
+											<td>
+												<a class="btn btn-secondary mb-2" href="/equipment/update/@equipment.ID">Cập nhật</a>
+												<button class="btn btn-danger" @onclick="()=> { DeleteID = equipment.ID; Modal.Open();}">Xoá</button>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
 
 	<AppModal @ref="Modal">
 		<Title>Notification</Title>
