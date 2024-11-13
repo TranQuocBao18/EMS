@@ -41,8 +41,9 @@ else
 									<tr>
 										<th>ID</th>
 										<th>Người tạo</th>
-										<th>Loại thiết bị</th>
-										<th>Khoa/phòng</th>
+										<th>Thiết bị</th>
+										<th>Từ Khoa/phòng</th>
+										<th>Đến Khoa/phòng</th>
 										<th>Lý do yêu cầu</th>
 										<th>Hành động</th>
 									</tr>
@@ -54,8 +55,9 @@ else
 										<tr>
 											<td>@OwnRotatingRequest.ID</td>
 											<td>@OwnRotatingRequest.User.Username</td>
-											<td>@OwnRotatingRequest.EquipmentType.EquipmentTypeName</td>
-											<td>@OwnRotatingRequest.Department.DepartmentName</td>
+											<td>@OwnRotatingRequest.Equipment.EquipmentName</td>
+											<td>@OwnRotatingRequest.FromDepartment.DepartmentName</td>
+											<td>@OwnRotatingRequest.ToDepartment.DepartmentName</td>
 											<td>@OwnRotatingRequest.RequestReason</td>
 											<td>
 												<a class="btn btn-secondary" href="/rotating/ownrequest/update/@OwnRotatingRequest.ID">Cập nhật</a>

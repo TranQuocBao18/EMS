@@ -10,6 +10,8 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Create
 {
 	public partial class CreateRotatingRequest
 	{
+		[Parameter]
+		public int ID { get; set; }
 		public RotatingRequestModel Model { get; set; } = new();
 
 		[Inject]
@@ -18,8 +20,9 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Create
 		private IToastService ToastService { get; set; }
 		[Inject]
 		private NavigationManager NavigationManager { get; set; }
-		private List<DepartmentModel> Departments { get; set; } = new();
-		private List<EquipmentTypeModel> EquipmentTypes { get; set; } = new();
+		private DepartmentModel FromDepartment { get; set; } = new();
+		private List<DepartmentModel> ToDepartments { get; set; } = new();
+		private EquipmentModel Equipment { get; set; } = new();
 		public UserModel User { get; set; } = new UserModel();
 		[Inject]
 		public AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -29,17 +32,30 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Create
 			await base.OnInitializedAsync();
 			await LoadUserFromToken();
 
+			var EquipmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/Equipment/{ID}");
+			if (EquipmentsRes != null && EquipmentsRes.Success)
+			{
+				Equipment = JsonConvert.DeserializeObject<EquipmentModel>(EquipmentsRes.Data.ToString());
+				if (Equipment != null)
+				{
+					// Gán giá trị cho Model.EquipmentId và Model.FromDepartmentId
+					Model.EquipmentId = Equipment.ID;
+					Model.FromDepartmentId = Equipment.DepartmentId;
+				}
+			}
+			var FromDepartmentRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/Department/{Equipment.DepartmentId}");
+			if (FromDepartmentRes != null && FromDepartmentRes.Success)
+			{
+				FromDepartment = JsonConvert.DeserializeObject<DepartmentModel>(FromDepartmentRes.Data.ToString());
+
+			}
 			var DepartmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Department");
 			if (DepartmentsRes != null && DepartmentsRes.Success)
 			{
-				Departments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
+				ToDepartments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
 			}
 
-			var EquipmentTypesRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/EquipmentType");
-			if (EquipmentTypesRes != null && EquipmentTypesRes.Success)
-			{
-				EquipmentTypes = JsonConvert.DeserializeObject<List<EquipmentTypeModel>>(EquipmentTypesRes.Data.ToString());
-			}
+
 
 		}
 

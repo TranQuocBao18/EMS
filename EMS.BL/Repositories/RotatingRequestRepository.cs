@@ -69,7 +69,7 @@ namespace EMS.BL.Repositories
         public async Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto)
         {
             var request = await dbContext.RotatingRequests.FindAsync(dto.RequestId);
-            if (request == null && request.AcceptanceLv2Status != true && request.AcceptanceLv3Status != true)
+            if (request == null || request != null && request.AcceptanceLv2Status != true && request.AcceptanceLv3Status != true || request != null && request.AcceptanceLv2Status == true && request.AcceptanceLv3Status != true)
             {
                 throw new Exception("Request not found or not approved!");
             }
@@ -98,7 +98,6 @@ namespace EMS.BL.Repositories
             dbContext.Equipments.Update(equipment);
             dbContext.RotatingHistories.Add(history);
 
-            dbContext.RotatingRequests.Remove(request);
             await dbContext.SaveChangesAsync();
 
             return history;
@@ -111,8 +110,9 @@ namespace EMS.BL.Repositories
             request.ReviewerLv2ID = null;
             request.ReviewerLv3ID = null;
 
-            request.Department = await dbContext.Departments.FindAsync(request.DepartmentId);
-            request.EquipmentType = await dbContext.EquipmentTypes.FindAsync(request.EquipmentTypeId);
+            request.FromDepartment = await dbContext.Departments.FindAsync(request.FromDepartmentId);
+            request.ToDepartment = await dbContext.Departments.FindAsync(request.ToDepartmentId);
+            request.Equipment = await dbContext.Equipments.FindAsync(request.EquipmentId);
             request.User = await dbContext.Users.FindAsync(request.UserId);
 
             dbContext.RotatingRequests.Add(request);
@@ -123,8 +123,9 @@ namespace EMS.BL.Repositories
         public async Task<RotatingRequestModel> GetRequest(int id)
         {
             return await dbContext.RotatingRequests.Include(r => r.User)
-                .Include(r => r.EquipmentType)
-                .Include(r => r.Department)
+                .Include(r => r.Equipment)
+                .Include(r => r.FromDepartment)
+                .Include(r => r.ToDepartment)
                 .Include(r => r.ReviewerLv2)
                 .Include(r => r.ReviewerLv3)
                 .FirstOrDefaultAsync(r => r.ID == id);
@@ -133,33 +134,37 @@ namespace EMS.BL.Repositories
         public async Task<List<RotatingRequestModel>> GetApprovedRequest()
         {
             return await dbContext.RotatingRequests.Where(r => r.AcceptanceLv2Status == true && r.AcceptanceLv3Status == true).Include(r => r.User)
-                .Include(r => r.EquipmentType)
-                .Include(r => r.Department)
-                .Include(r => r.ReviewerLv2)
+				.Include(r => r.Equipment)
+				.Include(r => r.FromDepartment)
+				.Include(r => r.ToDepartment)
+				.Include(r => r.ReviewerLv2)
                 .Include(r => r.ReviewerLv3).ToListAsync();
         }
 
         public async Task<List<RotatingRequestModel>> GetPendingRequestsLv2()
         {
             return await dbContext.RotatingRequests.Where(r => r.AcceptanceLv2Status == null).Include(r => r.User)
-                .Include(r => r.EquipmentType)
-                .Include(r => r.Department).ToListAsync();
+				.Include(r => r.Equipment)
+				.Include(r => r.FromDepartment)
+				.Include(r => r.ToDepartment).ToListAsync();
         }
 
         public async Task<List<RotatingRequestModel>> GetPendingRequestsLv3()
         {
             return await dbContext.RotatingRequests.Where(r => r.AcceptanceLv2Status == true && r.AcceptanceLv3Status == null).Include(r => r.User)
-                .Include(r => r.EquipmentType)
-                .Include(r => r.Department)
-                .Include(r => r.ReviewerLv2).ToListAsync();
+				.Include(r => r.Equipment)
+				.Include(r => r.FromDepartment)
+				.Include(r => r.ToDepartment)
+				.Include(r => r.ReviewerLv2).ToListAsync();
         }
 
         public async Task<List<RotatingRequestModel>> GetRequestsByUserId(int id)
         {
             return await dbContext.RotatingRequests.Where(r => r.UserId == id).Include(r => r.User)
-                .Include(r => r.EquipmentType)
-                .Include(r => r.Department)
-                .Include(r => r.ReviewerLv2)
+				.Include(r => r.Equipment)
+				.Include(r => r.FromDepartment)
+				.Include(r => r.ToDepartment)
+				.Include(r => r.ReviewerLv2)
                 .Include(r => r.ReviewerLv3).ToListAsync();
         }
 
@@ -177,8 +182,9 @@ namespace EMS.BL.Repositories
 
         public async Task UpdateRequest(RotatingRequestModel rotatingRequestModel)
         {
-            rotatingRequestModel.EquipmentType = await dbContext.EquipmentTypes.FindAsync(rotatingRequestModel.EquipmentTypeId);
-            rotatingRequestModel.Department = await dbContext.Departments.FindAsync(rotatingRequestModel.DepartmentId);
+            rotatingRequestModel.Equipment = await dbContext.Equipments.FindAsync(rotatingRequestModel.EquipmentId);
+            rotatingRequestModel.FromDepartment = await dbContext.Departments.FindAsync(rotatingRequestModel.FromDepartmentId);
+            rotatingRequestModel.ToDepartment = await dbContext.Departments.FindAsync(rotatingRequestModel.ToDepartmentId);
             rotatingRequestModel.User = await dbContext.Users.FindAsync(rotatingRequestModel.UserId);
 
 

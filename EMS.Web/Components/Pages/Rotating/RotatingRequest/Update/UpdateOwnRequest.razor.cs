@@ -24,8 +24,9 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 		[Inject]
 		public AuthenticationStateProvider AuthStateProvider { get; set; }
 		public UserModel User { get; set; } = new UserModel();
-		private List<DepartmentModel> Departments { get; set; } = new();
-		private List<EquipmentTypeModel> EquipmentTypes { get; set; } = new();
+		private List<DepartmentModel> FromDepartments { get; set; } = new();
+		private List<DepartmentModel> ToDepartments { get; set; } = new();
+		private List<EquipmentModel> Equipments { get; set; } = new();
 
 
 		protected override async Task OnInitializedAsync()
@@ -37,17 +38,25 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 			{
 				Model = JsonConvert.DeserializeObject<RotatingRequestModel>(res.Data.ToString());
 			}
+			if (Model.AcceptanceLv2Status == true)
+			{
+				ToastService.ShowError("Yêu cầu của bạn đang được duyệt nên không thể cập nhật");
+				await Task.Delay(2000);
+				NavigationManager.NavigateTo("/rotating/ownrequest");
+			}
 			var DepartmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Department");
 			if (DepartmentsRes != null && DepartmentsRes.Success)
 			{
-				Departments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
+				FromDepartments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
+				ToDepartments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
 			}
 
-			var EquipmentTypesRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/EquipmentType");
-			if (EquipmentTypesRes != null && EquipmentTypesRes.Success)
+			var EquipmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Equipment");
+			if (EquipmentsRes != null && EquipmentsRes.Success)
 			{
-				EquipmentTypes = JsonConvert.DeserializeObject<List<EquipmentTypeModel>>(EquipmentTypesRes.Data.ToString());
+				Equipments = JsonConvert.DeserializeObject<List<EquipmentModel>>(EquipmentsRes.Data.ToString());
 			}
+			
 		}
 
 		protected async Task LoadUserFromToken()

@@ -38,8 +38,9 @@ else
 									<tr>
 										<th>ID</th>
 										<th>Người tạo</th>
-										<th>Loại thiết bị</th>
-										<th>Khoa/phòng</th>
+										<th>Thiết bị</th>
+										<th>Từ Khoa/phòng</th>
+										<th>Đến Khoa/phòng</th>
 										<th>Lý do yêu cầu</th>
 										<th>Hành động</th>
 									</tr>
@@ -51,8 +52,9 @@ else
 										<tr>
 											<td>@rotatingRequest.ID</td>
 											<td>@rotatingRequest.User.Username</td>
-											<td>@rotatingRequest.EquipmentType.EquipmentTypeName</td>
-											<td>@rotatingRequest.Department.DepartmentName</td>
+											<td>@rotatingRequest.Equipment.EquipmentName</td>
+											<td>@rotatingRequest.FromDepartment.DepartmentName</td>
+											<td>@rotatingRequest.ToDepartment.DepartmentName</td>
 											<td>@rotatingRequest.RequestReason</td>
 											<td>
 												<a class="btn btn-secondary" href="/rotating/requestlv1/approve/@rotatingRequest.ID">Cập nhật</a>

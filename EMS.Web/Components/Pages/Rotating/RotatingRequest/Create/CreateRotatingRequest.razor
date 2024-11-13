@@ -1,5 +1,6 @@
-﻿@page "/rotating/ownrequest/create"
+﻿@page "/rotating/create/{ID:int}"
 @rendermode InteractiveServer
+
 
 <section class="content-header">
 	<div class="container-fluid">
@@ -10,8 +11,8 @@
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-					<li class="breadcrumb-item"><a href="/rotating/ownrequest">Yêu cầu của tôi</a></li>
-					<li class="breadcrumb-item active">Tạo mới</li>
+					<li class="breadcrumb-item"><a href="/equipment">Thiết bị</a></li>
+					<li class="breadcrumb-item active">Tạo mới yêu cầu luân chuyển</li>
 				</ol>
 			</div>
 		</div>
@@ -27,30 +28,30 @@
 		<div class="card-body">
 			<div class="row mb-3">
 				<div class="col-md-6">
-					<label> Loại thiết bị</label>
-					<InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
-						<option value="">Chọn loại thiết bị</option>
-						@foreach (var equipmentType in EquipmentTypes)
-						{
-							<option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
-						}
-					</InputSelect>
-					<ValidationMessage For="() => Model.EquipmentTypeId" />
+					<label>Thiết bị</label>
+					<InputText class="form-control" @bind-Value="Equipment.EquipmentName" Disabled="true" />
+					<ValidationMessage For="() => Model.EquipmentId" />
 				</div>
+
 				<div class="col-md-6">
-					<label> Phòng/khoa</label>
-					<InputSelect class="form-control" @bind-Value="Model.DepartmentId">
-						<option value="">Chọn phòng ban</option>
-						@foreach (var department in Departments)
-						{
-							<option value="@department.ID">@department.DepartmentName</option>
-						}
-					</InputSelect>
-					<ValidationMessage For="() => Model.DepartmentId" />
+					<label>Từ Phòng/khoa</label>
+					<InputText class="form-control" @bind-Value="FromDepartment.DepartmentName" Disabled="true" />
+					<ValidationMessage For="() => Model.FromDepartmentId" />
 				</div>
 			</div>
 
 			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Đến Phòng/khoa</label>
+					<InputSelect class="form-control" @bind-Value="Model.ToDepartmentId">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var department in ToDepartments)
+						{
+							<option value="@department.ID">@department.DepartmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ToDepartmentId" />
+				</div>
 				<div class="col-md-6">
 					<label> Lý do</label>
 					<InputText class="form-control" @bind-Value="Model.RequestReason" />

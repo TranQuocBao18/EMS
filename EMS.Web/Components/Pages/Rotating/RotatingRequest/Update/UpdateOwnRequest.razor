@@ -28,28 +28,39 @@
 			<div class="row mb-3">
 				<div class="col-md-6">
 					<label> Loại thiết bị</label>
-					<InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
+					<InputSelect class="form-control" @bind-Value="Model.EquipmentId">
 						<option value="">Chọn loại thiết bị</option>
-						@foreach (var equipmentType in EquipmentTypes)
+						@foreach (var equipment in Equipments)
 						{
-							<option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+							<option value="@equipment.ID">@equipment.EquipmentName</option>
 						}
 					</InputSelect>
-					<ValidationMessage For="() => Model.EquipmentTypeId" />
+					<ValidationMessage For="() => Model.EquipmentId" />
 				</div>
 				<div class="col-md-6">
 					<label> Phòng/khoa</label>
-					<InputSelect class="form-control" @bind-Value="Model.DepartmentId">
+					<InputSelect class="form-control" @bind-Value="Model.FromDepartmentId">
 						<option value="">Chọn phòng ban</option>
-						@foreach (var department in Departments)
+						@foreach (var department in FromDepartments)
 						{
 							<option value="@department.ID">@department.DepartmentName</option>
 						}
 					</InputSelect>
-					<ValidationMessage For="() => Model.DepartmentId" />
+					<ValidationMessage For="() => Model.FromDepartmentId" />
 				</div>
 			</div>
 			<div class="row mb-3">
+				<div class="col-md-6">
+					<label> Phòng/khoa</label>
+					<InputSelect class="form-control" @bind-Value="Model.ToDepartmentId">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var department in ToDepartments)
+						{
+							<option value="@department.ID">@department.DepartmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ToDepartmentId" />
+				</div>
 				<div class="col-md-6">
 					<label> Lý do</label>
 					<InputText class="form-control" @bind-Value="Model.RequestReason" />

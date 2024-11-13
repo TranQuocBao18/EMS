@@ -30,7 +30,7 @@ namespace EMS.Model.Entities
 		public DateOnly ExpireDay { get; set; }
 
 		// Khóa ngoại để liên kết với Department
-		public int? DepartmentId { get; set; } = 18;
+		public int DepartmentId { get; set; } = 18;
 		public virtual DepartmentModel Department { get; set; }  // Thuộc tính điều hướng
 		
 		// Khóa ngoại để liên kết với User

@@ -15,12 +15,13 @@ namespace EMS.Model.Entities
 		public virtual UserModel User { get; set; }
 
 		// Thông tin thiết bị
-		public int EquipmentTypeId { get; set; } // Khóa ngoại đến bảng Equipment
-		public virtual EquipmentTypeModel EquipmentType { get; set; }
+		public int EquipmentId { get; set; } // Khóa ngoại đến bảng Equipment
+		public virtual EquipmentModel Equipment { get; set; }
 
-		// Phòng ban liên quan
-		public int DepartmentId { get; set; } // Khóa ngoại đến bảng Department
-		public virtual DepartmentModel Department { get; set; }
+		public int FromDepartmentId { get; set; } 
+		public virtual DepartmentModel FromDepartment { get; set; }
+		public int ToDepartmentId { get; set; } 
+		public virtual DepartmentModel ToDepartment { get; set; }
 
 		// Lý do yêu cầu
 		public string RequestReason { get; set; }
