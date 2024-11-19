@@ -24,5 +24,7 @@ namespace EMS.Model.Entities
         public virtual UserModel ReviewerLv2 { get; set; }
         public int? ReviewerLv3Id { get; set; }
         public virtual UserModel ReviewerLv3 { get; set; }
-    }
+        public int RotatingRequestId { get; set; }
+        public virtual RotatingRequestModel RotatingRequest { get; set; }
+	}
 }

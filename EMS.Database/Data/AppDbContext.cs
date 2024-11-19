@@ -24,6 +24,8 @@ namespace EMS.Database.Data
         public DbSet<EquipmentTypeModel> EquipmentTypes { get; set; }
         public DbSet<RotatingRequestModel> RotatingRequests { get; set; }
         public DbSet<RotatingHistoryModel> RotatingHistories { get; set; }
+        public DbSet<PurchasingRequestModel> PurchasingRequests { get; set; }
+        public DbSet<PurchasingRequestDetailModel> PurchasingRequestDetails { get; set; }
 
 
     }

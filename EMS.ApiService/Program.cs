@@ -92,6 +92,9 @@ builder.Services.AddScoped<IRotatingRequestRepository, RotatingRequestRepository
 builder.Services.AddScoped<IRotatingHistoryService, RotatingHistoryService>();
 builder.Services.AddScoped<IRotatingHistoryRepository, RotatingHistoryRepository>();
 
+builder.Services.AddScoped<IPurchasingRequestService, PurchasingRequestService>();
+builder.Services.AddScoped<IPurchasingRequestRepository, PurchasingRequestRepository>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 var app = builder.Build();
