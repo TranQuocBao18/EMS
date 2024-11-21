@@ -1,0 +1,91 @@
+﻿@page "/purchasing/create"
+@rendermode InteractiveServer
+
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Tạo Yêu cầu luân chuyển</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/equipment">Quản lý mua mới thiết bị</a></li>
+					<li class="breadcrumb-item active">Tạo mới yêu cầu mua mới thiết bị</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Yêu cầu mua mới thiết bị</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="CreatePurchasingRequest" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Lý do</label>
+					<InputTextArea class="form-control" @bind-Value="Model.RequestReason" />
+					<ValidationMessage For="() => Model.RequestReason" />
+				</div>
+			</div>
+
+            <h5>Danh sách thiết bị</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Loại Thiết Bị</th>
+                        <th>Số Lượng</th>
+                        <th>Nhà cung cấp</th>
+                        <th>Giá</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.PurchasingRequestDetails)
+                    {
+                        <tr>
+                            <td>
+                                <select class="form-control" @bind="detail.EquipmentTypeId">
+                                    <option value="">-- Chọn loại thiết bị --</option>
+                                    @foreach (var type in EquipmentTypes)
+                                    {
+                                        <option value="@type.ID">@type.EquipmentTypeName</option>
+                                    }
+                                </select>
+                                <ValidationMessage For="() => detail.EquipmentTypeId" />
+                            </td>
+                            <td>
+                                <InputNumber class="form-control" @bind-Value="detail.Quantity" />
+                                <ValidationMessage For="() => detail.Quantity" />
+                            </td>
+                            <td>
+                                <InputText class="form-control" @bind-Value="detail.Supplier" />
+                                <ValidationMessage For="() => detail.Supplier" />
+                            </td>
+                            <td>
+                                <InputNumber class="form-control" @bind-Value="detail.Price" />
+                                <ValidationMessage For="() => detail.Price" />
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" type="button" @onclick="() => RemoveDetail(detail)">
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-secondary mb-3" type="button" @onclick="AddDetail">Thêm Thiết Bị</button>
+
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/purchasing">Trở về</a>
+			</div>
+		</div>
+	</EditForm>
+</div>

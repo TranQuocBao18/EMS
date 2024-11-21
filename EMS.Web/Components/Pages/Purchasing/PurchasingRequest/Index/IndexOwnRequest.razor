@@ -1,6 +1,6 @@
-﻿@page "/rotating/ownrequest"
+﻿@page "/purchasing/ownrequest"
 
-@if (OwnRotatingRequestModels == null)
+@if (OwnPurchasingRequestModels == null)
 {
 	<p>Đang tải ...</p>
 }
@@ -15,7 +15,7 @@ else
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Yêu cầu luân chuyển của tôi</li>
+						<li class="breadcrumb-item active">Yêu cầu mua mới của tôi</li>
 					</ol>
 				</div>
 			</div>
@@ -29,49 +29,60 @@ else
 
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Yêu cầu luân chuyển của tôi</h3>
+							<h3 class="card-title">Yêu cầu mua mới của tôi</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
 							<p>
-								<a class="btn btn-primary" href="/rotating/ownrequest/create">Tạo mới</a>
+								<a class="btn btn-primary" href="/purchasing/create">Tạo mới</a>
 							</p>
 							<table id="example1" class="table table-bordered table-striped">
 								<thead>
 									<tr>
 										<th>ID</th>
 										<th>Người tạo</th>
-										<th>Thiết bị</th>
-										<th>Từ Khoa/phòng</th>
-										<th>Đến Khoa/phòng</th>
 										<th>Lý do yêu cầu</th>
 										<th>Trạng thái duyệt cấp 2</th>
 										<th>Trạng thái duyệt cấp 3</th>
+										<th>Chi tiết</th>
 										<th>Hành động</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									@foreach (var OwnRotatingRequest in OwnRotatingRequestModels)
+									@foreach (var request in OwnPurchasingRequestModels)
 									{
 										<tr>
-											<td>@OwnRotatingRequest.ID</td>
-											<td>@OwnRotatingRequest.User.Username</td>
-											<td>@OwnRotatingRequest.Equipment.EquipmentName</td>
-											<td>@OwnRotatingRequest.FromDepartment.DepartmentName</td>
-											<td>@OwnRotatingRequest.ToDepartment.DepartmentName</td>
-											<td>@OwnRotatingRequest.RequestReason</td>
+											<td>@request.ID</td>
+											<td>@request.User.Username</td>
+											<td>@request.RequestReason</td>
 											<td>
-												@(OwnRotatingRequest.AcceptanceLv2Status.HasValue ?
-																						(OwnRotatingRequest.AcceptanceLv2Status.Value ? "Đã duyệt" : "Từ chối") : "Chưa duyệt")
+												@(request.AcceptanceLv2Status.HasValue ?
+																						(request.AcceptanceLv2Status.Value ? "Đã duyệt" : "Từ chối") : "Chưa duyệt")
 											</td>
 											<td>
-												@(OwnRotatingRequest.AcceptanceLv3Status.HasValue ?
-																						(OwnRotatingRequest.AcceptanceLv3Status.Value ? "Đã duyệt" : "Từ chối") : "Chưa duyệt")
+												@(request.AcceptanceLv3Status.HasValue ?
+																						(request.AcceptanceLv3Status.Value ? "Đã duyệt" : "Từ chối") : "Chưa duyệt")
 											</td>
 											<td>
-												<a class="btn btn-secondary" href="/rotating/ownrequest/update/@OwnRotatingRequest.ID">Cập nhật</a>
-												<button class="btn btn-danger" @onclick="()=> { DeleteID = OwnRotatingRequest.ID; Modal.Open();}">Xoá</button>
+												<ul>
+													@foreach (var detail in request.PurchasingRequestDetails)
+													{
+														<li>
+															@detail.EquipmentType.EquipmentTypeName - Số lượng: @detail.Quantity
+														</li>
+														<li>
+															Nhà cung cấp: @detail.Supplier
+														</li>
+														<li>
+															Giá: @detail.Price
+														</li>
+													}
+												</ul>
+											</td>
+											<td>
+												<a class="btn btn-secondary" href="/rotating/ownrequest/update/@request.ID">Cập nhật</a>
+												<button class="btn btn-danger" @onclick="()=> { DeleteID = request.ID; Modal.Open();}">Xoá</button>
 											</td>
 										</tr>
 									}

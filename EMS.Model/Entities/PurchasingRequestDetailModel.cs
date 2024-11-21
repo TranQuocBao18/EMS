@@ -14,5 +14,7 @@ namespace EMS.Model.Entities
 		public int EquipmentTypeId { get; set; }
 		public virtual EquipmentTypeModel EquipmentType { get; set; }
 		public int Quantity { get; set; }
-	}
+		public double Price { get; set; }
+		public string Supplier { get; set; }
+    }
 }

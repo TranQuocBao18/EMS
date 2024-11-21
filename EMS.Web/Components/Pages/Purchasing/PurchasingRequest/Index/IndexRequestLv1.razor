@@ -1,0 +1,89 @@
+﻿@page "/purchasing/requestlv1"
+
+@if (PurchasingRequestModels == null)
+{
+	<p>Loading ...</p>
+}
+else
+{
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Yêu cầu mua mới cần được phê duyệt cấp 1</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Yêu cầu mua mới cần được phê duyệt cấp 1</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Yêu cầu mua mới cần được phê duyệt cấp 1</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Người tạo</th>
+										<th>Lý do yêu cầu</th>
+										<th>Chi tiết</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var request in PurchasingRequestModels)
+									{
+										<tr>
+											<td>@request.ID</td>
+											<td>@request.User.Username</td>
+											<td>@request.RequestReason</td>
+											<td>
+												<ul>
+													@foreach (var detail in request.PurchasingRequestDetails)
+													{
+														<li>
+															@detail.EquipmentType.EquipmentTypeName - Số lượng: @detail.Quantity
+														</li>
+														<li>
+															Nhà cung cấp: @detail.Supplier
+														</li>
+														<li>
+															Giá: @detail.Price
+														</li>
+													}
+												</ul>
+											</td>
+											<td>
+												<a class="btn btn-secondary" href="/purchasing/requestlv1/approve/@request.ID">Cập nhật</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+}

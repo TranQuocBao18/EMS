@@ -95,7 +95,7 @@ namespace EMS.BL.Repositories
 		public async Task<List<PurchasingRequestModel>> GetApprovedRequest()
 		{
 			return await dbContext.PurchasingRequests.Where(r => r.AcceptanceLv2Status == true && r.AcceptanceLv3Status == true).Include(r => r.User)
-				.Include(r => r.PurchasingRequestDetails)
+				.Include(r => r.PurchasingRequestDetails).ThenInclude(r => r.EquipmentType)
 				.Include(r => r.ReviewerLv2)
 				.Include(r => r.ReviewerLv3)
 				.ToListAsync();
@@ -104,19 +104,19 @@ namespace EMS.BL.Repositories
 		public async Task<List<PurchasingRequestModel>> GetPendingRequestsLv2()
 		{
 			return await dbContext.PurchasingRequests.Where(r => r.AcceptanceLv2Status == null).Include(r => r.User)
-				.Include(r => r.PurchasingRequestDetails).ToListAsync();
+				.Include(r => r.PurchasingRequestDetails).ThenInclude(r => r.EquipmentType).ToListAsync();
 		}
 
 		public async Task<List<PurchasingRequestModel>> GetPendingRequestsLv3()
 		{
 			return await dbContext.PurchasingRequests.Where(r => r.AcceptanceLv2Status == true && r.AcceptanceLv3Status == null).Include(r => r.User)
-				.Include(r => r.PurchasingRequestDetails).Include(r => r.ReviewerLv2).ToListAsync();
+				.Include(r => r.PurchasingRequestDetails).ThenInclude(r => r.EquipmentType).Include(r => r.ReviewerLv2).ToListAsync();
 		}
 
 		public async Task<PurchasingRequestModel> GetRequest(int id)
 		{
 			return await dbContext.PurchasingRequests.Include(r => r.User)
-				.Include(r => r.PurchasingRequestDetails)
+				.Include(r => r.PurchasingRequestDetails).ThenInclude(r => r.EquipmentType)
 				.Include(r => r.ReviewerLv2)
 				.Include(r => r.ReviewerLv3)
 				.FirstOrDefaultAsync(r => r.ID == id);
@@ -125,7 +125,7 @@ namespace EMS.BL.Repositories
 		public async Task<List<PurchasingRequestModel>> GetRequestsByUserId(int id)
 		{
 			return await dbContext.PurchasingRequests.Where(r => r.UserId == id).Include(r => r.User)
-				.Include(r => r.PurchasingRequestDetails)
+				.Include(r => r.PurchasingRequestDetails).ThenInclude(r => r.EquipmentType)
 				.Include(r => r.ReviewerLv2)
 				.Include(r => r.ReviewerLv3)
 				.ToListAsync();

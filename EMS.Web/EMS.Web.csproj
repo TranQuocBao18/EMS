@@ -17,4 +17,9 @@
     <ProjectReference Include="..\EMS.ServiceDefaults\EMS.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Pages\Purchasing\PurchasingHistory\" />
+    <Folder Include="Components\Pages\Purchasing\PurchasingRequest\Update\" />
+  </ItemGroup>
+
 </Project>
