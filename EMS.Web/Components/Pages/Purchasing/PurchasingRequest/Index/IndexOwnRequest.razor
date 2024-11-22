@@ -40,7 +40,6 @@ else
 								<thead>
 									<tr>
 										<th>ID</th>
-										<th>Người tạo</th>
 										<th>Lý do yêu cầu</th>
 										<th>Trạng thái duyệt cấp 2</th>
 										<th>Trạng thái duyệt cấp 3</th>
@@ -54,7 +53,6 @@ else
 									{
 										<tr>
 											<td>@request.ID</td>
-											<td>@request.User.Username</td>
 											<td>@request.RequestReason</td>
 											<td>
 												@(request.AcceptanceLv2Status.HasValue ?
@@ -81,7 +79,7 @@ else
 												</ul>
 											</td>
 											<td>
-												<a class="btn btn-secondary" href="/rotating/ownrequest/update/@request.ID">Cập nhật</a>
+												<a class="btn btn-secondary" href="/purchasing/ownrequest/update/@request.ID">Cập nhật</a>
 												<button class="btn btn-danger" @onclick="()=> { DeleteID = request.ID; Modal.Open();}">Xoá</button>
 											</td>
 										</tr>

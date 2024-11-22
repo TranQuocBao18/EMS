@@ -26,6 +26,7 @@ namespace EMS.Database.Data
         public DbSet<RotatingHistoryModel> RotatingHistories { get; set; }
         public DbSet<PurchasingRequestModel> PurchasingRequests { get; set; }
         public DbSet<PurchasingRequestDetailModel> PurchasingRequestDetails { get; set; }
+        public DbSet<PurchasingHistoryModel> PurchasingHistories { get; set; }
 
 
     }

@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Pages\Purchasing\PurchasingHistory\" />
-    <Folder Include="Components\Pages\Purchasing\PurchasingRequest\Update\" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,8 @@ namespace EMS.Model.Entities
 		public int ID { get; set; }
 		public int PurchasingRequestId { get; set; }
 		public virtual PurchasingRequestModel PurchasingRequest { get; set; }
+		public int? PurchasingHistoryId { get; set; } // Lịch sử mua liên quan
+		public PurchasingHistoryModel PurchasingHistory { get; set; }
 		public int EquipmentTypeId { get; set; }
 		public virtual EquipmentTypeModel EquipmentType { get; set; }
 		public int Quantity { get; set; }

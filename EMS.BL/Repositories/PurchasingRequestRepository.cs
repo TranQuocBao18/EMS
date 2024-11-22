@@ -19,7 +19,7 @@ namespace EMS.BL.Repositories
 		Task<PurchasingRequestModel> ApproveRequestLv2(ApproveRequestDto dto);
 		Task<List<PurchasingRequestModel>> GetPendingRequestsLv3();
 		Task<PurchasingRequestModel> ApproveRequestLv3(ApproveRequestDto dto);
-		Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto);
+		Task<PurchasingHistoryModel> CompleteRequest(CompletePurchasingRequestDto dto);
 		Task<List<PurchasingRequestModel>> GetApprovedRequest();
 		Task<bool> PurchasingRequestModelExists(int id);
 		Task UpdateRequest(PurchasingRequestModel PurchasingRequestModel);
@@ -65,9 +65,30 @@ namespace EMS.BL.Repositories
 			return request;
 		}
 
-		public Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto)
+		public async Task<PurchasingHistoryModel> CompleteRequest(CompletePurchasingRequestDto dto)
 		{
-			throw new NotImplementedException();
+			var request = await dbContext.PurchasingRequests
+									.Include(n => n.PurchasingRequestDetails)
+									.FirstOrDefaultAsync(n => n.ID == dto.RequestId);
+			if (request == null || request != null && request.AcceptanceLv2Status != true && request.AcceptanceLv3Status != true || request != null && request.AcceptanceLv2Status == true && request.AcceptanceLv3Status != true)
+			{
+				throw new Exception("Request not found or not approved!");
+			}
+
+			var purchasingHistory = new PurchasingHistoryModel
+			{
+				PurchasingRequestID = dto.RequestId,
+				PurchasedDate = DateTime.UtcNow,
+				Notes = dto.Note
+			};
+			dbContext.PurchasingHistories.Add(purchasingHistory);
+
+			foreach (var detail in request.PurchasingRequestDetails)
+			{
+				detail.PurchasingHistoryId = purchasingHistory.ID;
+			}
+			await dbContext.SaveChangesAsync();
+			return purchasingHistory;
 		}
 
 		public async Task<PurchasingRequestModel> CreateRequest(PurchasingRequestModel request)
@@ -77,7 +98,7 @@ namespace EMS.BL.Repositories
 			request.ReviewerLv2ID = null;
 			request.ReviewerLv3ID = null;
 
-			
+
 			request.User = await dbContext.Users.FindAsync(request.UserId);
 
 			dbContext.PurchasingRequests.Add(request);

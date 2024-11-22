@@ -1,0 +1,77 @@
+﻿@page "/purchasing/ownrequest/update/{ID:int}"
+@rendermode InteractiveServer
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Cập nhật Yêu cầu luân chuyển của tôi</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/purchasing/ownrequest">Yêu cầu mua mới của tôi</a></li>
+					<li class="breadcrumb-item active">Cập nhật Yêu cầu mua mới của tôi</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Cập nhật Yêu cầu mua mới</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-12">
+					<label> Lý do yêu cầu</label>
+					<InputTextArea class="form-control" @bind-Value="Model.RequestReason" Rows="3" />
+					<ValidationMessage For="() => Model.RequestReason" />
+				</div>
+			</div>
+
+			<h5>Danh sách chi tiết yêu cầu</h5>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Loại thiết bị</th>
+						<th>Số lượng</th>
+						<th>Nhà cung cấp</th>
+						<th>Giá</th>
+						<th>Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var detail in Model.PurchasingRequestDetails)
+					{
+						<tr>
+							<td>
+								<InputSelect class="form-control" @bind-Value="detail.EquipmentTypeId">
+									<option value="">Chọn loại thiết bị</option>
+									@foreach (var equipmentType in EquipmentTypes)
+									{
+										<option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+									}
+								</InputSelect>
+							</td>
+							<td><InputNumber class="form-control" @bind-Value="detail.Quantity" Min="1" /></td>
+							<td><InputText class="form-control" @bind-Value="detail.Supplier" /></td>
+							<td><InputNumber class="form-control" @bind-Value="detail.Price" Min="0" Step="1000" /></td>
+							<td>
+								<button class="btn btn-danger btn-sm" @onclick="() => RemoveDetail(detail)">Xóa</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<button class="btn btn-primary btn-sm" @onclick="AddDetail">Thêm chi tiết</button>
+		</div>
+		<div class="card-footer">
+			<button class="btn btn-primary" type="submit">Lưu</button>
+			<a class="btn btn-secondary" href="/purchasing/ownrequest">Trở về</a>
+		</div>
+	</EditForm>
+</div>
