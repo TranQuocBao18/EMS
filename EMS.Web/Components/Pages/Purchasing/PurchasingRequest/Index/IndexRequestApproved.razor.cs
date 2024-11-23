@@ -15,10 +15,10 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Index
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
-			await LoadRotatingRequest();
+			await LoadPurchasingRequest();
 		}
 
-		protected async Task LoadRotatingRequest()
+		protected async Task LoadPurchasingRequest()
 		{
 			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/PurchasingRequest/approved");
 			if (res != null && res.Success)

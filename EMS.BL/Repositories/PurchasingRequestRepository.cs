@@ -79,9 +79,12 @@ namespace EMS.BL.Repositories
 			{
 				PurchasingRequestID = dto.RequestId,
 				PurchasedDate = DateTime.UtcNow,
-				Notes = dto.Note
+				Notes = dto.Note,
+				ReviewerLv2ID = request.ReviewerLv2ID,
+				ReviewerLv3ID = request.ReviewerLv3ID
 			};
 			dbContext.PurchasingHistories.Add(purchasingHistory);
+			await dbContext.SaveChangesAsync();
 
 			foreach (var detail in request.PurchasingRequestDetails)
 			{

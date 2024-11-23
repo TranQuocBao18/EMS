@@ -1,6 +1,7 @@
-﻿@page "/purchasing/requestlv1"
+﻿@page "/purchasing/history"
 
-@if (PurchasingRequestModels == null)
+
+@if (PurchasingHistoryModels == null)
 {
 	<p>Đang tải ...</p>
 }
@@ -10,12 +11,12 @@ else
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Quản lý Yêu cầu mua mới cần được phê duyệt cấp 2</h1>
+					<h1>Quản lý Lịch sử mua mới</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Yêu cầu mua mới cần được phê duyệt cấp 2</li>
+						<li class="breadcrumb-item active">Lịch sử mua mới</li>
 					</ol>
 				</div>
 			</div>
@@ -29,7 +30,7 @@ else
 
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Yêu cầu mua mới cần được phê duyệt cấp 2</h3>
+							<h3 class="card-title">Lịch sử mua mới</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
@@ -37,23 +38,27 @@ else
 								<thead>
 									<tr>
 										<th>ID</th>
-										<th>Người tạo</th>
-										<th>Lý do yêu cầu</th>
+										<th>Ngày mua</th>
+										<th>Ghi chú</th>
+										<th>Người duyệt cấp 2</th>
+										<th>Người duyệt cấp 3</th>
 										<th>Chi tiết</th>
 										<th>Hành động</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									@foreach (var request in PurchasingRequestModels)
+									@foreach (var history in PurchasingHistoryModels)
 									{
 										<tr>
-											<td>@request.ID</td>
-											<td>@request.User.Username</td>
-											<td>@request.RequestReason</td>
+											<td>@history.ID</td>
+											<td>@history.PurchasedDate.ToString("dd/MM/yyyy")</td>
+											<td>@history.Notes</td>
+											<td>@history.ReviewerLv2.Username</td>
+											<td>@history.ReviewerLv3.Username</td>
 											<td>
 												<ul>
-													@foreach (var detail in request.PurchasingRequestDetails)
+													@foreach (var detail in history.PurchasingRequestDetails)
 													{
 														<li>
 															@detail.EquipmentType.EquipmentTypeName - Số lượng: @detail.Quantity
@@ -68,7 +73,8 @@ else
 												</ul>
 											</td>
 											<td>
-												<a class="btn btn-secondary" href="/purchasing/requestlv1/approve/@request.ID">Cập nhật</a>
+												<a class="btn btn-secondary" href="/purchasing/history/update/@history.ID">Cập nhật</a>
+												<a class="btn btn-secondary" href="/purchasing/history/viewrequest/@history.PurchasingRequestID">Xem yêu cầu</a>
 											</td>
 										</tr>
 									}

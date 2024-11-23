@@ -57,7 +57,7 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Index
 
 		protected async Task HandleDelete()
 		{
-			var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/RotatingRequest/{DeleteID}");
+			var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/PurchasingRequest/{DeleteID}");
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Xoá yêu cầu hoàn tất");

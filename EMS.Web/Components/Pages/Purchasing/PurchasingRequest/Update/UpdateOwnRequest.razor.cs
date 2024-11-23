@@ -83,7 +83,7 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Update
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Cập nhật yêu cầu thành công!");
-				NavigationManager.NavigateTo("/rotating/ownrequest");
+				NavigationManager.NavigateTo("/purchasing/ownrequest");
 			}
 		}
 	}

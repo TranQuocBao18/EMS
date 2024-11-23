@@ -1,0 +1,83 @@
+﻿@page "/purchasing/history/update/{ID:int}"
+@rendermode InteractiveServer
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Cập nhật Lịch sử mua mới</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/purchasing/history">Lịch sử mua mới</a></li>
+					<li class="breadcrumb-item active">Cập nhật</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Lịch sử mua mới</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="UpdatePurchasingHistory" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>ID</label>
+					<InputNumber class="form-control" @bind-Value="Model.ID" disabled="true" />
+					<ValidationMessage For="() => Model.ID" />
+				</div>
+				<div class="col-md-6">
+					<label>ID Yêu cầu</label>
+					<InputNumber class="form-control" @bind-Value="Model.PurchasingRequestID" disabled="true" />
+					<ValidationMessage For="() => Model.PurchasingRequestID" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Ngày mua mới</label>
+					<InputDate class="form-control" @bind-Value="Model.PurchasedDate" />
+					<ValidationMessage For="() => Model.PurchasedDate" />
+				</div>
+				<div class="col-md-6">
+					<label>Ghi chú</label>
+					<InputTextArea class="form-control" @bind-Value="Model.Notes" />
+					<ValidationMessage For="() => Model.Notes" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Người duyệt Cấp 2</label>
+					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv2ID">
+						<option value="">Chọn Người dùng</option>
+						@foreach (var user in ReviewerLv2)
+						{
+							<option value="@user.ID">@user.Username</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ReviewerLv2ID" />
+				</div>
+				<div class="col-md-6">
+					<label>Người duyệt Cấp 3</label>
+					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv3ID">
+						<option value="">Chọn Người dùng</option>
+						@foreach (var user in ReviewerLv3)
+						{
+							<option value="@user.ID">@user.Username</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ReviewerLv3ID" />
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/purchasing/history">Trở về</a>
+			</div>
+		</div>
+
+	</EditForm>
+</div>

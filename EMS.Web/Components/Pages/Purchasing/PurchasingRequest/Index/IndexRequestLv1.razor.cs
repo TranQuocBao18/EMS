@@ -19,7 +19,7 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Index
 
 		protected async Task LoadPurchasingRequest()
 		{
-			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/RotatingRequest/lv2/pending");
+			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/PurchasingRequest/lv2/pending");
 			if (res != null && res.Success)
 			{
 				PurchasingRequestModels = JsonConvert.DeserializeObject<List<PurchasingRequestModel>>(res.Data.ToString());

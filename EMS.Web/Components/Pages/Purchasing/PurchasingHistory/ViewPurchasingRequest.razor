@@ -1,0 +1,72 @@
+﻿@page "/purchasing/history/viewrequest/{ID:int}"
+@rendermode InteractiveServer
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Yêu cầu mua mới tương ứng</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/rotating/history">Lịch sử mua mới</a></li>
+					<li class="breadcrumb-item active">Xem Yêu cầu mua mới tương ứng</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Yêu cầu mua mới</h3>
+	</div>
+	<div class="card-body">
+		<table id="example1" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Người tạo</th>
+					<th>Lý do yêu cầu</th>
+					<th>Người duyệt cấp 2</th>
+					<th>Lý do</th>
+					<th>Người duyệt cấp 3</th>
+					<th>Lý do</th>
+					<th>Chi tiết</th>
+					<th>Hành động</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>@Model?.ID</td>
+					<td>@Model?.User?.Username</td>
+					<td>@Model?.RequestReason</td>
+					<td>@Model?.ReviewerLv2?.Username</td>
+					<td>@Model?.ReasonLv2</td>
+					<td>@Model?.ReviewerLv3?.Username</td>
+					<td>@Model?.ReasonLv3</td>
+					<td>
+						<ul>
+							@foreach (var detail in Model.PurchasingRequestDetails)
+							{
+								<li>
+									@detail.EquipmentType.EquipmentTypeName - Số lượng: @detail.Quantity
+								</li>
+								<li>
+									Nhà cung cấp: @detail.Supplier
+								</li>
+								<li>
+									Giá: @detail.Price
+								</li>
+							}
+						</ul>
+					</td>
+					<td>
+						<a class="btn btn-secondary" href="/purchasing/history">Trở về</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
