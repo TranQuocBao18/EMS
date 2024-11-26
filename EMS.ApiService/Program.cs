@@ -98,6 +98,12 @@ builder.Services.AddScoped<IPurchasingRequestRepository, PurchasingRequestReposi
 builder.Services.AddScoped<IPurchasingHistoryService, PurchasingHistoryService>();
 builder.Services.AddScoped<IPurchasingHistoryRepository, PurchasingHistoryRepository>();
 
+builder.Services.AddScoped<IMaintenanceRequestService, MaintenanceRequestService>();
+builder.Services.AddScoped<IMaintenanceRequestRepository, MaintenanceRequestRepository>();
+
+builder.Services.AddScoped<IMaintenanceHistoryService, MaintenanceHistoryService>();
+builder.Services.AddScoped<IMaintenanceHistoryRepository, MaintenanceHistoryRepository>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 var app = builder.Build();

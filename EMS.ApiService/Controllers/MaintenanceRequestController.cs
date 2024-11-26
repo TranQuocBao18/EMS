@@ -78,10 +78,10 @@ namespace EMS.ApiService.Controllers
 			return Ok(new BaseResponseModel { Success = true });
 		}
 
-		[HttpPost("{id}/complete-maintenance")]
-		public async Task<ActionResult<BaseResponseModel>> CompleteMaintenance(int id)
+		[HttpPost("complete-maintenance")]
+		public async Task<ActionResult<BaseResponseModel>> CompleteMaintenance(CompletePurchasingRequestDto dto)
 		{
-			var request = await maintenanceRequestService.CompleteMaintenance(id);
+			var request = await maintenanceRequestService.CompleteMaintenance(dto);
 
 			return Ok(new BaseResponseModel { Success = true });
 		}

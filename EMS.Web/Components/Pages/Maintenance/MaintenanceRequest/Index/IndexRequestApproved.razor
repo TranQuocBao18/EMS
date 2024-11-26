@@ -1,0 +1,103 @@
+﻿@page "/maintenance/approved"
+@using EMS.Model.Entities
+
+@if (MaintenanceRequestModels == null)
+{
+	<p>Đang tải ...</p>
+}
+else
+{
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Yêu cầu bảo trì thiết bị đã hoàn thành phê duyệt</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Yêu cầu bảo trì thiết bị đã phê duyệt</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Yêu cầu bảo trì thiết bị đã hoàn thành phê duyệt</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Người tạo</th>
+										<th>Thiết bị</th>
+										<th>Lý do yêu cầu</th>
+										<th>Người duyệt cấp 2</th>
+										<th>Lý do chấp nhận</th>
+										<th>Người duyệt cấp 3</th>
+										<th>Lý do chấp nhận</th>
+										<th>Trạng thái bảo trì(nếu có)</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var request in MaintenanceRequestModels)
+									{
+										<tr>
+											<td>@request.ID</td>
+											<td>@request.User.Username</td>
+											<td>@request.Equipment.EquipmentName</td>
+											<td>@request.RequestReason</td>
+											<td>@request.ReviewerLv2.Username</td>
+											<td>@request.ReasonLv2</td>
+											<td>@request.ReviewerLv3.Username</td>
+											<td>@request.ReasonLv3</td>
+											<td>
+												@(request.MaintenanceStatus switch
+												{
+												MaintenanceStatus.Pending => "Chưa giải quyết",
+												MaintenanceStatus.InProgress => "Đang bảo trì",
+												MaintenanceStatus.Completed => "Hoàn thành",
+												_ => "Không xác định"
+												})
+											</td>
+											<td>
+												@if (request.MaintenanceStatus == MaintenanceStatus.Pending)
+												{
+													<button class="btn btn-secondary" @onclick="() => StartMaintenance(request.ID)">Bắt đầu bảo trì</button>
+												}
+												else if (request.MaintenanceStatus == MaintenanceStatus.InProgress)
+												{
+													<a class="btn btn-secondary" href="maintenance/approved/maintain/@request.ID">Hoàn thành bảo trì</a>
+												}
+												else if (request.MaintenanceStatus == MaintenanceStatus.Completed)
+												{
+													<a class="btn btn-secondary" href="/maintenance/history">Xem lịch sử</a>
+												}
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+}

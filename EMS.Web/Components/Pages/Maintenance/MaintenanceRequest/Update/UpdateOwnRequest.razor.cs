@@ -1,19 +1,18 @@
-﻿using System.Security.Claims;
-using Blazored.Toast.Services;
-using EMS.Model.DTOs;
+﻿using Blazored.Toast.Services;
 using EMS.Model.Entities;
 using EMS.Model.Models.Others;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
-namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
+namespace EMS.Web.Components.Pages.Maintenance.MaintenanceRequest.Update
 {
 	public partial class UpdateOwnRequest
 	{
 		[Parameter]
 		public int ID { get; set; }
-		public RotatingRequestModel Model { get; set; } = new();
+		public MaintenanceRequestModel Model { get; set; } = new();
 
 		[Inject]
 		private ApiClient ApiClient { get; set; }
@@ -24,8 +23,6 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 		[Inject]
 		public AuthenticationStateProvider AuthStateProvider { get; set; }
 		public UserModel User { get; set; } = new UserModel();
-		private List<DepartmentModel> FromDepartments { get; set; } = new();
-		private List<DepartmentModel> ToDepartments { get; set; } = new();
 		private List<EquipmentModel> Equipments { get; set; } = new();
 
 
@@ -33,30 +30,24 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 		{
 			await base.OnInitializedAsync();
 			await LoadUserFromToken();
-			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/RotatingRequest/{ID}");
+			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>($"/api/MaintenanceRequest/{ID}");
 			if (res != null && res.Success)
 			{
-				Model = JsonConvert.DeserializeObject<RotatingRequestModel>(res.Data.ToString());
+				Model = JsonConvert.DeserializeObject<MaintenanceRequestModel>(res.Data.ToString());
 			}
 			if (Model.AcceptanceLv2Status != null)
 			{
 				ToastService.ShowError("Yêu cầu của bạn đang được duyệt nên không thể cập nhật");
 				await Task.Delay(2000);
-				NavigationManager.NavigateTo("/rotating/ownrequest");
+				NavigationManager.NavigateTo("/maintenance/ownrequest");
 			}
-			var DepartmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Department");
-			if (DepartmentsRes != null && DepartmentsRes.Success)
-			{
-				FromDepartments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
-				ToDepartments = JsonConvert.DeserializeObject<List<DepartmentModel>>(DepartmentsRes.Data.ToString());
-			}
-
+			
 			var EquipmentsRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Equipment");
 			if (EquipmentsRes != null && EquipmentsRes.Success)
 			{
 				Equipments = JsonConvert.DeserializeObject<List<EquipmentModel>>(EquipmentsRes.Data.ToString());
 			}
-			
+
 		}
 
 		protected async Task LoadUserFromToken()
@@ -79,11 +70,11 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
 		public async Task Submit()
 		{
 			Model.UserId = User.ID;
-			var res = await ApiClient.PutAsync<BaseResponseModel, RotatingRequestModel>($"/api/RotatingRequest/{ID}", Model);
+			var res = await ApiClient.PutAsync<BaseResponseModel, MaintenanceRequestModel>($"/api/MaintenanceRequest/{ID}", Model);
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Cập nhật yêu cầu thành công!");
-				NavigationManager.NavigateTo("/rotating/ownrequest");
+				NavigationManager.NavigateTo("/maintenance/ownrequest");
 			}
 		}
 	}

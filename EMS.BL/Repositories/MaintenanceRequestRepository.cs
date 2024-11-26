@@ -20,7 +20,7 @@ namespace EMS.BL.Repositories
 		Task<List<MaintenanceRequestModel>> GetPendingRequestsLv3();
 		Task<MaintenanceRequestModel> ApproveRequestLv3(ApproveRequestDto dto);
 		Task<MaintenanceRequestModel> CompleteApproval(int id);
-		Task<MaintenanceHistoryModel> CompleteMaintenance(int id);
+		Task<MaintenanceHistoryModel> CompleteMaintenance(CompletePurchasingRequestDto dto);
 		Task<List<MaintenanceRequestModel>> GetApprovedRequest();
 		Task<bool> MaintenanceRequestModelExists(int id);
 		Task UpdateRequest(MaintenanceRequestModel maintenanceRequest);
@@ -90,9 +90,9 @@ namespace EMS.BL.Repositories
 			return request;
 		}
 
-		public async Task<MaintenanceHistoryModel> CompleteMaintenance(int id)
+		public async Task<MaintenanceHistoryModel> CompleteMaintenance(CompletePurchasingRequestDto dto)
 		{
-			var request = await dbContext.MaintenanceRequests.Include(r => r.Equipment).FirstOrDefaultAsync(r => r.ID == id);
+			var request = await dbContext.MaintenanceRequests.Include(r => r.Equipment).FirstOrDefaultAsync(r => r.ID == dto.RequestId);
 			if (request == null)
 			{
 				throw new Exception("Yêu cầu không tìm thấy hoặc chưa được duyệt.");
@@ -119,7 +119,8 @@ namespace EMS.BL.Repositories
 				MaintenanceStartDate = request.MaintenanceStartDate.Value,
 				MaintenanceEndDate = request.MaintenanceEndDate.Value,
 				ReviewerLv2ID = request.ReviewerLv2ID,
-				ReviewerLv3ID = request.ReviewerLv3ID
+				ReviewerLv3ID = request.ReviewerLv3ID,
+				Notes = dto.Note
 			};
 
 			dbContext.MaintenanceHistories.Add(maintenanceHistory);
@@ -167,7 +168,7 @@ namespace EMS.BL.Repositories
 		public async Task<List<MaintenanceRequestModel>> GetPendingRequestsLv3()
 		{
 			return await dbContext.MaintenanceRequests.Where(r => r.AcceptanceLv2Status == true && r.AcceptanceLv3Status == null).Include(r => r.User)
-				.Include(r => r.Equipment).ToListAsync();
+				.Include(r => r.Equipment).Include(r => r.ReviewerLv2).ToListAsync();
 		}
 
 		public async Task<MaintenanceRequestModel> GetRequest(int id)

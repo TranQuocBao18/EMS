@@ -1,0 +1,82 @@
+﻿@page "/maintenance/history"
+
+
+@if (MaintenanceHistoryModels == null)
+{
+	<p>Đang tải ...</p>
+}
+else
+{
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Lịch sử bảo trì thiết bị</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Lịch sử bảo trì thiết bị</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Lịch sử bảo trì thiết bị</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Thiết bị</th>
+										<th>Ngày bắt đầu bảo trì</th>
+										<th>Ngày kết thúc bảo trì</th>
+										<th>Người duyệt Lv2</th>
+										<th>Người duyệt Lv3</th>
+										<th>Ghi chú</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var history in MaintenanceHistoryModels)
+									{
+										<tr>
+											<td>@history.ID</td>
+											<td>@history.Equipment.EquipmentName</td>
+											<td>@(history.MaintenanceStartDate?.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+											<td>@(history.MaintenanceEndDate?.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+											<td>@history.ReviewerLv2.Username</td>
+											<td>@history.ReviewerLv3.Username</td>
+											<td>@history.Notes</td>
+											<td>
+												<a class="btn btn-secondary" href="/maintenance/history/update/@history.ID">Cập nhật</a>
+												<a class="btn btn-primary" href="/maintenance/history/viewrequest/@history.MaintenanceRequestId">Xem yêu cầu</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+}

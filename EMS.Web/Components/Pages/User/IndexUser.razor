@@ -16,7 +16,7 @@ else
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Người dùng</li>
+						<li class="breadcrumb-item active">Quản lý người dùng</li>
 					</ol>
 				</div>
 			</div>
@@ -59,11 +59,11 @@ else
 											<td>
 												@foreach (var role in user.UserRoles)
 												{
-													<span>@role.Role.RoleName</span>
+													<span>@(RoleMapping.ContainsKey(role.Role.RoleName) ? RoleMapping[role.Role.RoleName] : role.Role.RoleName)</span>
 													<br />
 												}
 											</td>
-											<td>@user.IsLock</td>
+											<td>@(user.IsLock ? "Có" : "Không")</td>
 											<td>
 												<a class="btn btn-primary mr-1" href="/user/update/@user.ID">Cập nhật</a>
 												<button class="btn btn-danger mr-1" @onclick="()=> { DeleteID = user.ID; Modal.Open();}">Xoá</button>

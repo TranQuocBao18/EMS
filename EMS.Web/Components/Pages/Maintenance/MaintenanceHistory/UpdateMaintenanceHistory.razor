@@ -1,0 +1,89 @@
+﻿@page "/maintenance/history/update/{ID:int}"
+@rendermode InteractiveServer
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Cập nhật Lịch sử bảo trì thiết bị</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/maintenance/history">Lịch sử bảo trì thiết bị</a></li>
+					<li class="breadcrumb-item active">Cập nhật</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Lịch sử bảo trì thiết bị</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="UpdateRotatingHistory" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>ID</label>
+					<InputNumber class="form-control" @bind-Value="Model.ID" disabled="true" />
+					<ValidationMessage For="() => Model.ID" />
+				</div>
+				<div class="col-md-6">
+					<label>Thiết bị</label>
+					<InputSelect class="form-control" @bind-Value="Model.EquipmentId">
+						<option value="">Chọn thiết bị</option>
+						@foreach (var equipment in Equipments)
+						{
+							<option value="@equipment.ID">@equipment.EquipmentName</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.EquipmentId" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Người duyệt Lv2</label>
+					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv2ID">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var user in ReviewerLv2)
+						{
+							<option value="@user.ID">@user.Username</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ReviewerLv2ID" />
+				</div>
+				<div class="col-md-6">
+					<label>Người duyệt Lv3</label>
+					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv3ID">
+						<option value="">Chọn phòng ban</option>
+						@foreach (var user in ReviewerLv3)
+						{
+							<option value="@user.ID">@user.Username</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="() => Model.ReviewerLv3ID" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Ngày bắt đầu bảo trì</label>
+					<InputDate class="form-control" @bind-Value="Model.MaintenanceStartDate" />
+					<ValidationMessage For="() => Model.MaintenanceStartDate" />
+				</div>
+				<div class="col-md-6">
+					<label>Ngày kết thúc bảo trì</label>
+					<InputDate class="form-control" @bind-Value="Model.MaintenanceEndDate" />
+					<ValidationMessage For="() => Model.MaintenanceEndDate" />
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/maintenance/history">Trở về</a>
+			</div>
+		</div>
+
+	</EditForm>
+</div>

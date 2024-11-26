@@ -1,5 +1,7 @@
 ﻿@page "/equipment"
 @using EMS.Web.Components.BaseComponents
+@using EMS.Model.Entities
+
 
 
 @if (EquipmentModels == null)
@@ -67,9 +69,16 @@ else
 											<td>@equipment.EquipmentSerial</td>
 											<td>@equipment.EquipmentType?.EquipmentTypeName</td>
 											<td>@equipment.Price</td>
-											<td>@equipment.PurchaseDay</td>
-											<td>@equipment.Status</td>
-											<td>@equipment.ExpireDay</td>
+											<td>@(equipment.PurchaseDay.ToString("dd/MM/yyyy"))</td>
+											<td>@(equipment.Status switch
+												{
+													EquipmentStatus.DangSuDung => "Đang sử dụng",
+													EquipmentStatus.DangBaoTri => "Đang bảo trì",
+													EquipmentStatus.KhongSuDung => "Không sử dụng",
+												_ => "Không xác định"
+												})
+											</td>
+											<td>@(equipment.ExpireDay.ToString("dd/MM/yyyy"))</td>
 											<td>@equipment.Department?.DepartmentName</td>
 											<td>
 												@if (equipment.User == null)

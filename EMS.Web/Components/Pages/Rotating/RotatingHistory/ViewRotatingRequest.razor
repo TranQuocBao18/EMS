@@ -41,16 +41,16 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Model.ID</td>
-					<td>Model.User.Username</td>
-					<td>Model.Equipment.EquipmentName</td>
-					<td>Model.FromDepartment.DepartmentName</td>
-					<td>Model.ToDepartment.DepartmentName</td>
-					<td>Model.RequestReason</td>
-					<td>Model.ReviewerLv2.Username</td>
-					<td>Model.ReasonLv2</td>
-					<td>Model.ReviewerLv3.Username</td>
-					<td>Model.ReasonLv3</td>
+					<td>@Model?.ID</td>
+					<td>@Model?.User?.Username</td>
+					<td>@Model?.Equipment?.EquipmentName</td>
+					<td>@Model?.FromDepartment?.DepartmentName</td>
+					<td>@Model?.ToDepartment?.DepartmentName</td>
+					<td>@Model?.RequestReason</td>
+					<td>@Model?.ReviewerLv2?.Username</td>
+					<td>@Model?.ReasonLv2</td>
+					<td>@Model?.ReviewerLv3?.Username</td>
+					<td>@Model?.ReasonLv3</td>
 					<td>
 						<a class="btn btn-secondary" href="/rotating/history">Trở về</a>
 					</td>

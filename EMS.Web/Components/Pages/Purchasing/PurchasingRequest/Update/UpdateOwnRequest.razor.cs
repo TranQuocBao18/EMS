@@ -37,7 +37,7 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Update
 			{
 				Model = JsonConvert.DeserializeObject<PurchasingRequestModel>(res.Data.ToString());
 			}
-			if (Model.AcceptanceLv2Status == true)
+			if (Model.AcceptanceLv2Status != null)
 			{
 				ToastService.ShowError("Yêu cầu của bạn đang được duyệt nên không thể cập nhật");
 				await Task.Delay(2000);

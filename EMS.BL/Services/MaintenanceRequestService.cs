@@ -19,7 +19,7 @@ namespace EMS.BL.Services
 		Task<List<MaintenanceRequestModel>> GetPendingRequestsLv3();
 		Task<MaintenanceRequestModel> ApproveRequestLv3(ApproveRequestDto dto);
 		Task<MaintenanceRequestModel> CompleteApproval(int id);
-		Task<MaintenanceHistoryModel> CompleteMaintenance(int id);
+		Task<MaintenanceHistoryModel> CompleteMaintenance(CompletePurchasingRequestDto dto);
 
 		Task<List<MaintenanceRequestModel>> GetApprovedRequest();
 		Task<bool> MaintenanceRequestModelExists(int id);
@@ -44,9 +44,9 @@ namespace EMS.BL.Services
 			return maintenanceRequestRepository.CompleteApproval(id);
 		}
 
-		public Task<MaintenanceHistoryModel> CompleteMaintenance(int id)
+		public Task<MaintenanceHistoryModel> CompleteMaintenance(CompletePurchasingRequestDto dto)
 		{
-			return maintenanceRequestRepository.CompleteMaintenance(id);
+			return maintenanceRequestRepository.CompleteMaintenance(dto);
 		}
 
 		public Task<MaintenanceRequestModel> CreateRequest(MaintenanceRequestModel request)

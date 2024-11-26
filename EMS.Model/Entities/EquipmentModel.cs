@@ -10,8 +10,7 @@ namespace EMS.Model.Entities
 	{
 		DangSuDung = 1,
 		KhongSuDung = 2,
-		DangBaoTri = 3,
-		DangSuaChua = 4
+		DangBaoTri = 3
 	}
 	public class EquipmentModel
 	{
