@@ -29,7 +29,8 @@ namespace EMS.Database.Data
         public DbSet<PurchasingHistoryModel> PurchasingHistories { get; set; }
         public DbSet<MaintenanceRequestModel> MaintenanceRequests { get; set; }
         public DbSet<MaintenanceHistoryModel> MaintenanceHistories { get; set; }
+		public DbSet<LiquidationRequestModel> LiquidationRequests { get; set; }
+		public DbSet<LiquidationHistoryModel> LiquidationHistories { get; set; }
 
-
-    }
+	}
 }

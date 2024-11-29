@@ -10,7 +10,8 @@ namespace EMS.Model.Entities
 	{
 		DangSuDung = 1,
 		KhongSuDung = 2,
-		DangBaoTri = 3
+		DangBaoTri = 3,
+		DaThanhLy = 4
 	}
 	public class EquipmentModel
 	{
@@ -26,7 +27,7 @@ namespace EMS.Model.Entities
 		public double Price { get; set; }
 		public DateOnly PurchaseDay { get; set; }
 		public EquipmentStatus Status { get; set; }
-		public DateOnly ExpireDay { get; set; }
+		public DateOnly? ExpireDay { get; set; }
 
 		// Khóa ngoại để liên kết với Department
 		public int DepartmentId { get; set; } = 18;

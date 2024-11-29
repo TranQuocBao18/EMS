@@ -1,7 +1,7 @@
-﻿@page "/maintenance/history"
+﻿@page "/liquidation/history"
 
 
-@if (MaintenanceHistoryModels == null)
+@if (LiquidationHistoryModels == null)
 {
 	<p>Đang tải ...</p>
 }
@@ -11,12 +11,12 @@ else
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Quản lý Lịch sử bảo trì thiết bị</h1>
+					<h1>Quản lý Lịch sử thanh lý</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Lịch sử bảo trì thiết bị</li>
+						<li class="breadcrumb-item active">Lịch sử thanh lý</li>
 					</ol>
 				</div>
 			</div>
@@ -30,11 +30,12 @@ else
 
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Lịch sử bảo trì thiết bị</h3>
+							<h3 class="card-title">Lịch sử thanh lý</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
 							<p>
+
 								<button class="btn btn-primary" @onclick="ExportToCSV">Xuất tệp CSV</button>
 							</p>
 							<table id="example1" class="table table-bordered table-striped">
@@ -42,9 +43,9 @@ else
 									<tr>
 										<th>ID</th>
 										<th>Thiết bị</th>
-										<th>Ngày bắt đầu bảo trì</th>
-										<th>Ngày kết thúc bảo trì</th>
+										<th>Ngày thanh lý</th>
 										<th>Người duyệt Lv2</th>
+										<th>Người duyệt Lv3</th>
 										<th>Người duyệt Lv3</th>
 										<th>Ghi chú</th>
 										<th>Hành động</th>
@@ -52,19 +53,18 @@ else
 								</thead>
 
 								<tbody>
-									@foreach (var history in MaintenanceHistoryModels)
+									@foreach (var history in LiquidationHistoryModels)
 									{
 										<tr>
 											<td>@history.ID</td>
 											<td>@history.Equipment.EquipmentName</td>
-											<td>@(history.MaintenanceStartDate?.ToString("dd/MM/yyyy HH:mm:ss"))</td>
-											<td>@(history.MaintenanceEndDate?.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+											<td>@(history.LiquidDate.ToString("dd/MM/yyyy HH:mm:ss"))</td>
 											<td>@history.ReviewerLv2.Username</td>
 											<td>@history.ReviewerLv3.Username</td>
 											<td>@history.Notes</td>
 											<td>
-												<a class="btn btn-secondary" href="/maintenance/history/update/@history.ID">Cập nhật</a>
-												<a class="btn btn-primary" href="/maintenance/history/viewrequest/@history.MaintenanceRequestId">Xem yêu cầu</a>
+												<a class="btn btn-secondary" href="/liquidation/history/update/@history.ID">Cập nhật</a>
+												<a class="btn btn-secondary" href="/liquidation/history/viewrequest/@history.LiquidationRequestID">Xem yêu cầu</a>
 											</td>
 										</tr>
 									}

@@ -104,6 +104,12 @@ builder.Services.AddScoped<IMaintenanceRequestRepository, MaintenanceRequestRepo
 builder.Services.AddScoped<IMaintenanceHistoryService, MaintenanceHistoryService>();
 builder.Services.AddScoped<IMaintenanceHistoryRepository, MaintenanceHistoryRepository>();
 
+builder.Services.AddScoped<ILiquidationRequestService, LiquidationRequestService>();
+builder.Services.AddScoped<ILiquidationRequestRepository, LiquidationRequestRepository>();
+
+builder.Services.AddScoped<ILiquidationHistoryService, LiquidationHistoryService>();
+builder.Services.AddScoped<ILiquidationHistoryRepository, LiquidationHistoryRepository>();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 var app = builder.Build();

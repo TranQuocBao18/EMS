@@ -1,3 +1,4 @@
+using BlazorDownloadFile;
 using Blazored.Toast;
 using EMS.Web;
 using EMS.Web.Authentication;
@@ -18,6 +19,7 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddOutputCache();
 builder.Services.AddBlazoredToast();
+builder.Services.AddBlazorDownloadFile();
 
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 

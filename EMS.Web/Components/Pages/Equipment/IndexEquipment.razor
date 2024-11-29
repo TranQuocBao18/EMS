@@ -75,10 +75,11 @@ else
 													EquipmentStatus.DangSuDung => "Đang sử dụng",
 													EquipmentStatus.DangBaoTri => "Đang bảo trì",
 													EquipmentStatus.KhongSuDung => "Không sử dụng",
+													EquipmentStatus.DaThanhLy => "Đã thanh lý",
 												_ => "Không xác định"
 												})
 											</td>
-											<td>@(equipment.ExpireDay.ToString("dd/MM/yyyy"))</td>
+											<td>@(equipment.ExpireDay?.ToString("dd/MM/yyyy") ?? "Không có")</td>
 											<td>@equipment.Department?.DepartmentName</td>
 											<td>
 												@if (equipment.User == null)

@@ -34,6 +34,9 @@ else
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
+							<p>
+								<button class="btn btn-primary" @onclick="ExportToCSV">Xuất tệp CSV</button>
+							</p>
 							<table id="example1" class="table table-bordered table-striped">
 								<thead>
 									<tr>
@@ -52,7 +55,7 @@ else
 									{
 										<tr>
 											<td>@history.ID</td>
-											<td>@history.PurchasedDate.ToString("dd/MM/yyyy")</td>
+											<td>@(history.PurchasedDate.ToString("dd/MM/yyyy HH:mm:ss"))</td>
 											<td>@history.Notes</td>
 											<td>@history.ReviewerLv2.Username</td>
 											<td>@history.ReviewerLv3.Username</td>

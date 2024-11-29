@@ -51,7 +51,7 @@ namespace EMS.Web.Components.Pages.Equipment
 			if (res != null && res.Success)
 			{
 				ToastService.ShowSuccess("Tạo thiết bị thành công!");
-				NavigationManager.NavigateTo("/department");
+				NavigationManager.NavigateTo("/equipment");
 			}
 		}
 	}

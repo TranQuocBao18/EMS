@@ -1,0 +1,66 @@
+﻿@page "/liquidation/requestlv1/approve/{ID:int}"
+@rendermode InteractiveServer
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Duyệt Yêu cầu thanh lý cấp 2</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/liquidation/requestlv1">Yêu cầu thanh lý cấp 1</a></li>
+					<li class="breadcrumb-item active">Duyệt Yêu cầu thanh lý cấp 2</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Duyệt Yêu cầu thanh lý cấp 2</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="ApproveRequestLv2" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label> ID </label>
+					<InputNumber class="form-control" @bind-Value="Model.RequestId" disabled="true" />
+					<ValidationMessage For="() => Model.RequestId" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-12">
+					<label> Trạng thái chấp thuận</label>
+				</div>
+				<div class="col-md-6">
+					<InputRadioGroup @bind-Value="Model.AcceptanceStatus">
+						<div class="form-check">
+							<InputRadio class="form-check-input" Value="true" id="yesOption" />
+							<label for="yesOption" class="form-check-label">Đồng ý</label>
+						</div>
+						<div class="form-check">
+							<InputRadio class="form-check-input" Value="false" id="noOption" />
+							<label for="noOption" class="form-check-label">Không đồng ý</label>
+						</div>
+					</InputRadioGroup>
+					<ValidationMessage For="() => Model.AcceptanceStatus" />
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label>Lý do</label>
+					<InputTextArea class="form-control" @bind-Value="Model.Reason" />
+					<ValidationMessage For="() => Model.Reason" />
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/liquidation/requestlv1">Trở về</a>
+			</div>
+		</div>
+	</EditForm>
+</div>

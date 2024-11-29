@@ -1,0 +1,81 @@
+﻿@page "/liquidation/approved"
+
+@if (LiquidationRequestModels == null)
+{
+	<p>Đang tải ...</p>
+}
+else
+{
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Quản lý Yêu cầu thanh lý đã hoàn thành phê duyệt</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Yêu cầu thanh lý đã phê duyệt</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Yêu cầu thanh lý đã hoàn thành phê duyệt</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Người tạo</th>
+										<th>Thiết bị</th>
+										<th>Lý do yêu cầu</th>
+										<th>Người duyệt cấp 2</th>
+										<th>Lý do chấp nhận</th>
+										<th>Người duyệt cấp 3</th>
+										<th>Lý do chấp nhận</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (var request in LiquidationRequestModels)
+									{
+										<tr>
+											<td>@request.ID</td>
+											<td>@request.User.Username</td>
+											<td>@request.Equipment.EquipmentName</td>
+											<td>@request.RequestReason</td>
+											<td>@request.ReviewerLv2.Username</td>
+											<td>@request.ReasonLv2</td>
+											<td>@request.ReviewerLv3.Username</td>
+											<td>@request.ReasonLv3</td>
+											<td>
+												<a class="btn btn-secondary" href="/liquidation/approved/liquidate/@request.ID">Thanh lý</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+}
