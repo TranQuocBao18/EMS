@@ -38,7 +38,6 @@ namespace EMS.Web.Components.Pages.Liquidation.LiquidationRequest.Update
 			if (Model.AcceptanceLv2Status != null)
 			{
 				ToastService.ShowError("Yêu cầu của bạn đang được duyệt nên không thể cập nhật");
-				await Task.Delay(2000);
 				NavigationManager.NavigateTo("/liquidation/ownrequest");
 			}
 

@@ -57,6 +57,15 @@ namespace EMS.Web.Components.Pages.Maintenance.MaintenanceRequest.Index
 
 		protected async Task HandleDelete()
 		{
+			var requestToDelete = OwnMaintenanceRequestModels.FirstOrDefault(r => r.ID == DeleteID);
+
+			// Kiểm tra nếu yêu cầu tồn tại và có trạng thái duyệt cấp 2
+			if (requestToDelete != null && requestToDelete.AcceptanceLv2Status != null)
+			{
+				ToastService.ShowError("Không thể xoá yêu cầu đang đợi duyệt!");
+				Modal.Close();
+				return;
+			}
 			var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/MaintenanceRequest/{DeleteID}");
 			if (res != null && res.Success)
 			{

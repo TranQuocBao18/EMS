@@ -18,6 +18,13 @@ namespace EMS.ApiService.Controllers
 			return Ok(new BaseResponseModel { Success = true, Data = departments });
 		}
 
+		[HttpGet("count")]
+		public async Task<ActionResult<BaseResponseModel>> GetDepartmentsAmount()
+		{
+			var users = await departmentService.GetDepartmentsAmount();
+			return Ok(new BaseResponseModel { Success = true, Data = users });
+		}
+
 		[HttpGet("{id}")]
 		public async Task<ActionResult<BaseResponseModel>> GetDepartment(int id)
 		{

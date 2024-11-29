@@ -12,6 +12,7 @@ namespace EMS.BL.Services
 	public interface IDepartmentService
 	{
 		Task<List<DepartmentModel>> GetDepartments();
+		Task<int> GetDepartmentsAmount();
 		Task<DepartmentModel> GetDepartment(int id);
 		Task UpdateDepartment(DepartmentDto departmentDto);
 		Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto);
@@ -43,6 +44,11 @@ namespace EMS.BL.Services
 		public Task<List<DepartmentModel>> GetDepartments()
 		{
 			return departmentRepository.GetDepartments();
+		}
+
+		public Task<int> GetDepartmentsAmount()
+		{
+			return departmentRepository.GetDepartmentsAmount();
 		}
 
 		public Task UpdateDepartment(DepartmentDto departmentDto)

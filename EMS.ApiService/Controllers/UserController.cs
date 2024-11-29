@@ -17,7 +17,14 @@ namespace EMS.ApiService.Controllers
             return Ok(new BaseResponseModel { Success = true, Data = users });
         }
 
-        [HttpGet("{id}")]
+		[HttpGet("count")]
+		public async Task<ActionResult<BaseResponseModel>> GetUsersAmount()
+		{
+			var users = await userService.GetUsersAmount();
+			return Ok(new BaseResponseModel { Success = true, Data = users });
+		}
+
+		[HttpGet("{id}")]
         public async Task<ActionResult<BaseResponseModel>> GetUser(int id)
         {
             var userModel = await userService.GetUser(id);
@@ -90,5 +97,6 @@ namespace EMS.ApiService.Controllers
             await userService.UpdateUserRoles(userModel.ID, userRolesList); // Sử dụng userRolesList
             return Ok(new BaseResponseModel { Success = true });
         }
+
     }
 }

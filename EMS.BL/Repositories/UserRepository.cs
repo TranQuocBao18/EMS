@@ -12,7 +12,8 @@ namespace EMS.BL.Repositories
     public interface IUserRepository
     {
         Task<List<UserModel>> GetUsers();
-        Task<UserModel> GetUser(int id);
+		Task<int> GetUsersAmount();
+		Task<UserModel> GetUser(int id);
         Task<bool> ChangePassword(string username, string oldPassword, string newPassword);
         Task<bool> ToggleUserLockStatus(string username);
         Task<bool> UserModelExists(int id);
@@ -71,7 +72,12 @@ namespace EMS.BL.Repositories
             return await dbContext.Users.Include(n => n.UserRoles).ThenInclude(n => n.Role).ToListAsync();
         }
 
-        public async Task<bool> ToggleUserLockStatus(string username)
+		public async Task<int> GetUsersAmount()
+		{
+            return await dbContext.Users.CountAsync();
+		}
+
+		public async Task<bool> ToggleUserLockStatus(string username)
         {
             // Tìm người dùng theo username
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);

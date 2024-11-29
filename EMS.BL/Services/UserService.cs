@@ -11,7 +11,8 @@ namespace EMS.BL.Services
     public interface IUserService
     {
         Task<List<UserModel>> GetUsers();
-        Task<UserModel> GetUser(int id);
+        Task<int> GetUsersAmount();
+		Task<UserModel> GetUser(int id);
         Task<bool> ChangePassword(string username, string oldPassword, string newPassword);
         Task<bool> ToggleUserLockStatus(string username);
         Task<bool> UserModelExists(int id);
@@ -47,7 +48,12 @@ namespace EMS.BL.Services
             return userRepository.GetUsers();
         }
 
-        public Task<bool> ToggleUserLockStatus(string username)
+		public Task<int> GetUsersAmount()
+		{
+            return userRepository.GetUsersAmount();
+		}
+
+		public Task<bool> ToggleUserLockStatus(string username)
         {
             return userRepository.ToggleUserLockStatus(username);
         }

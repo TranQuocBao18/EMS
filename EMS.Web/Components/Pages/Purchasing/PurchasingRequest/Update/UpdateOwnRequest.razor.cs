@@ -40,7 +40,6 @@ namespace EMS.Web.Components.Pages.Purchasing.PurchasingRequest.Update
 			if (Model.AcceptanceLv2Status != null)
 			{
 				ToastService.ShowError("Yêu cầu của bạn đang được duyệt nên không thể cập nhật");
-				await Task.Delay(2000);
 				NavigationManager.NavigateTo("/purchasing/ownrequest");
 			}
 			var equipmentTypesRes = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/EquipmentType");

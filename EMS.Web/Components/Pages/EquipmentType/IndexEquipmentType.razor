@@ -1,8 +1,10 @@
-﻿@page "/department"
-<PageTitle>Quản lý Phòng/Khoa</PageTitle>
+﻿@page "/equipmenttype"
+@using EMS.Web.Components.BaseComponents
+@using EMS.Model.Entities
+<PageTitle>Quản lý loại thiết bị</PageTitle>
 
 
-@if (DepartmentModels == null)
+@if (EquipmentTypeModels == null)
 {
 	<p>Đang tải ...</p>
 }
@@ -12,12 +14,12 @@ else
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Quản lý Phòng/Khoa</h1>
+					<h1>Quản lý Loại thiết bị</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Phòng/Khoa</li>
+						<li class="breadcrumb-item active">Loại thiết bị</li>
 					</ol>
 				</div>
 			</div>
@@ -31,31 +33,32 @@ else
 
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Danh sách Phòng/Khoa</h3>
+							<h3 class="card-title">Danh sách Loại thiết bị</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
 							<p>
-								<a class="btn btn-primary" href="/department/create">Tạo phòng/khoa</a>
 
+								<a class="btn btn-primary" href="/equipmenttype/createequipmenttype">Tạo loại thiết bị</a>
 							</p>
 							<table id="example1" class="table table-bordered table-striped">
 								<thead>
 									<tr>
 										<th>ID</th>
-										<th>Tên phòng/khoa</th>
+										<th>Tên thiết bị</th>
 										<th>Hành động</th>
 									</tr>
 								</thead>
+
 								<tbody>
-									@foreach (var department in DepartmentModels)
+									@foreach (var equipmentType in EquipmentTypeModels)
 									{
 										<tr>
-											<td>@department.ID</td>
-											<td>@department.DepartmentName</td>
+											<td>@equipmentType.ID</td>
+											<td>@equipmentType.EquipmentTypeName</td>
 											<td>
-												<a class="btn btn-secondary mr-2" href="/department/update/@department.ID">Cập nhật</a>
-												<button class="btn btn-danger" @onclick="()=> { DeleteID = department.ID; Modal.Open();}">Xoá</button>
+												<a class="btn btn-secondary mb-2" href="/equipmenttype/update/@equipmentType.ID">Cập nhật</a>
+												<button class="btn btn-danger" @onclick="()=> { DeleteID = equipmentType.ID; Modal.Open();}">Xoá</button>
 											</td>
 										</tr>
 									}
@@ -73,12 +76,10 @@ else
 		<!-- /.container-fluid -->
 	</section>
 
-	
-
 	<AppModal @ref="Modal">
 		<Title>Notification</Title>
 		<Body>
-			Bạn có chắc là muốn xoá phòng/khoa này không?
+			Bạn có muốn xoá thiết bị này ?
 		</Body>
 		<Footer>
 			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Có</button>

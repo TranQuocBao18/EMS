@@ -12,6 +12,7 @@ namespace EMS.BL.Repositories
 	public interface IEquipmentTypeRepository
 	{
 		Task<List<EquipmentTypeModel>> GetEquipmentTypes();
+		Task<int> GetEquipmentTypesAmount();
 		Task<EquipmentTypeModel> GetEquipmentType(int id);
 		Task UpdateEquipmentType(EquipmentTypeModel equipmentType);
 		Task<EquipmentTypeModel> CreateEquipmentType(EquipmentTypeModel equipmentType);
@@ -48,6 +49,11 @@ namespace EMS.BL.Repositories
 		public async Task<List<EquipmentTypeModel>> GetEquipmentTypes()
 		{
 			return await dbContext.EquipmentTypes.ToListAsync();
+		}
+
+		public async Task<int> GetEquipmentTypesAmount()
+		{
+			return await dbContext.EquipmentTypes.CountAsync();
 		}
 
 		public async Task UpdateEquipmentType(EquipmentTypeModel equipmentType)

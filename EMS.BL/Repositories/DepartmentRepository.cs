@@ -13,6 +13,7 @@ namespace EMS.BL.Repositories
 	public interface IDepartmentRepository
 	{
 		Task<List<DepartmentModel>> GetDepartments();
+		Task<int> GetDepartmentsAmount();
 		Task<DepartmentModel> GetDepartment(int id);
 		Task UpdateDepartment(DepartmentDto departmentDto);
 		Task<DepartmentModel> CreateDepartment(DepartmentDto departmentDto);
@@ -53,6 +54,11 @@ namespace EMS.BL.Repositories
 		public async Task<List<DepartmentModel>> GetDepartments()
 		{
 			return await dbContext.Departments.ToListAsync();
+		}
+
+		public async Task<int> GetDepartmentsAmount()
+		{
+			return await dbContext.Departments.CountAsync();
 		}
 
 		public async Task UpdateDepartment(DepartmentDto departmentDto)

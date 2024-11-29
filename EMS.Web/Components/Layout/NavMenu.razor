@@ -1,52 +1,315 @@
 ﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="/" class="brand-link">
-        <img src="Template/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 16px;">Equipment Management</span>
-    </a>
+	<!-- Brand Logo -->
+	<a href="/" class="brand-link">
+		<img src="Template/dist/img/logo.png" alt="EMS Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		<span class="brand-text font-weight-light" style="font-size: 16px;">Equipment Management</span>
+	</a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="Template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">@UserName</a>
-            </div>
-        </div>
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<!-- Sidebar user panel (optional) -->
+		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<div class="image">
+				<img src="Template/dist/img/userdefault.png" class="img-circle elevation-2" alt="User Image">
+			</div>
+			<div class="info">
+				<a href="#" class="d-block">@UserName</a>
+			</div>
+		</div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-collapse-hide-child" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <NavLink href="/" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </NavLink>
-                    
-                </li>
-                <li class="nav-item">
-                    <NavLink href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Widgets
-                        </p>
-                    </NavLink>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+		<!-- Sidebar Menu -->
+		<nav class="mt-2">
+			<ul data-widget="treeview" class="nav nav-pills nav-sidebar flex-column nav-legacy nav-collapse-hide-child" role="menu" data-accordion="false">
+				<!-- Add icons to the links using the .nav-icon class
+					 with font-awesome or any other icon font library -->
+				<li class="nav-item">
+					<NavLink href="/" class="nav-link">
+						<i class="nav-icon fas fa-home"></i>
+						<p>Trang chủ</p>
+					</NavLink>
+				</li>
+				<AuthorizeView Roles="Lv3">
+					<Authorized>
+						<li class="nav-item menu-open">
+							<a class="nav-link">
+								<i class="nav-icon fas fa-user"></i>
+								<p>
+									Quản lý người dùng
+									<i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav-treeview">
+								<li class="nav-item">
+									<NavLink href="user" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Danh sách người dùng</p>
+									</NavLink>
+								</li>
+								<li class="nav-item">
+									<NavLink href="user/register" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Đăng ký tài khoản</p>
+									</NavLink>
+								</li>
+							</ul>
+						</li>
+					</Authorized>
+				</AuthorizeView>
+				<li class="nav-item menu-open">
+					<NavLink href="department" class="nav-link">
+						<i class="nav-icon fas fa-building"></i>
+						<p>
+							Quản lý Phòng/khoa
+						</p>
+					</NavLink>
+				</li>
+				<li class="nav-item menu-open">
+					<NavLink href="equipment" class="nav-link">
+						<i class="nav-icon fas fa-cogs"></i>
+						<p>
+							Quản lý Thiết bị
+						</p>
+					</NavLink>
+				</li>
+				<li class="nav-item menu-open">
+					<NavLink href="equipmenttype" class="nav-link">
+						<i class="nav-icon fas fa-bars"></i>
+						<p>
+							Quản lý Loại thiết bị
+						</p>
+					</NavLink>
+				</li>
+				<li class="nav-item menu-open">
+					<a class="nav-link">
+						<i class="nav-icon fas fa-exchange-alt"></i>
+						<p>
+							Quản lý luân chuyển
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<NavLink href="rotating/ownrequest" class="nav-link">
+								<i class="far fa-circle nav-icon"></i>
+								<p>Yêu cầu của tôi</p>
+							</NavLink>
+						</li>
+						<AuthorizeView Roles="Lv2">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="rotating/requestlv1" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp một</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="rotating/requestlv2" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp hai</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv2,Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="rotating/approved" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu đã được duyệt</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+					</ul>
+				</li>
+				<li class="nav-item menu-open">
+					<a class="nav-link">
+						<i class="nav-icon fas fa-plus-square"></i>
+						<p>
+							Quản lý mua mới thiết bị
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<NavLink href="purchasing/ownrequest" class="nav-link">
+								<i class="far fa-circle nav-icon"></i>
+								<p>Yêu cầu của tôi</p>
+							</NavLink>
+						</li>
+						<AuthorizeView Roles="Lv2">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="purchasing/requestlv1" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp một</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="purchasing/requestlv2" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp hai</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv2,Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="purchasing/approved" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu đã được duyệt</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+					</ul>
+				</li>
+				<li class="nav-item menu-open">
+					<a class="nav-link">
+						<i class="nav-icon fas fa-wrench"></i>
+						<p>
+							Quản lý bảo trì thiết bị
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<NavLink href="maintenance/ownrequest" class="nav-link">
+								<i class="far fa-circle nav-icon"></i>
+								<p>Yêu cầu của tôi</p>
+							</NavLink>
+						</li>
+						<AuthorizeView Roles="Lv2">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="maintenance/requestlv1" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp một</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="maintenance/requestlv2" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu cấp hai</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<AuthorizeView Roles="Lv2,Lv3">
+							<Authorized>
+								<li class="nav-item">
+									<NavLink href="maintenance/approved" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu đã được duyệt</p>
+									</NavLink>
+								</li>
+							</Authorized>
+						</AuthorizeView>
+						<li class="nav-item menu-open">
+							<a class="nav-link">
+								<i class="nav-icon fas fa-paper-plane"></i>
+								<p>
+									Quản lý thanh lý thiết bị
+									<i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<NavLink href="liquidation/ownrequest" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Yêu cầu của tôi</p>
+									</NavLink>
+								</li>
+								<AuthorizeView Roles="Lv2">
+									<Authorized>
+										<li class="nav-item">
+											<NavLink href="liquidation/requestlv1" class="nav-link">
+												<i class="far fa-circle nav-icon"></i>
+												<p>Yêu cầu cấp một</p>
+											</NavLink>
+										</li>
+									</Authorized>
+								</AuthorizeView>
+								<AuthorizeView Roles="Lv3">
+									<Authorized>
+										<li class="nav-item">
+											<NavLink href="liquidation/requestlv2" class="nav-link">
+												<i class="far fa-circle nav-icon"></i>
+												<p>Yêu cầu cấp hai</p>
+											</NavLink>
+										</li>
+									</Authorized>
+								</AuthorizeView>
+								<AuthorizeView Roles="Lv2,Lv3">
+									<Authorized>
+										<li class="nav-item">
+											<NavLink href="liquidation/approved" class="nav-link">
+												<i class="far fa-circle nav-icon"></i>
+												<p>Yêu cầu đã được duyệt</p>
+											</NavLink>
+										</li>
+									</Authorized>
+								</AuthorizeView>
+							</ul>
+						</li>
+						<li class="nav-item menu-open">
+							<a class="nav-link">
+								<i class="nav-icon fas fa-history"></i>
+								<p>
+									Thống kê
+									<i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<NavLink href="rotating/history" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Lịch sử luân chuyển</p>
+									</NavLink>
+								</li>
+								<li class="nav-item">
+									<NavLink href="purchasing/history" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Lịch sử mua mới</p>
+									</NavLink>
+								</li>
+								<li class="nav-item">
+									<NavLink href="maintenance/history" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Lịch sử bảo trì</p>
+									</NavLink>
+								</li>
+								<li class="nav-item">
+									<NavLink href="liquidation/history" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Lịch sử thanh lý</p>
+									</NavLink>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
 </aside>
 
 @code {
-    [Parameter]
-    public string UserName { get; set; }
+	[Parameter]
+	public string UserName { get; set; }
 }

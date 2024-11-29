@@ -11,7 +11,6 @@
     {
         await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsLoggedOut();
         ToastService.ShowSuccess("Đăng xuất thành công!");
-        await Task.Delay(2000);
         Navigation.NavigateTo("/login");
     }
 }

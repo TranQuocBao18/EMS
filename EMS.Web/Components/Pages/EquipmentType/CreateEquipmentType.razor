@@ -1,0 +1,44 @@
+﻿@page "/equipmenttype/createequipmenttype"
+@using EMS.Model.Entities
+@rendermode InteractiveServer
+<PageTitle>Tạo mới loại thiết bị</PageTitle>
+
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Tạo Loại thiết bị</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="/equipmenttype">Loại thiết bị</a></li>
+					<li class="breadcrumb-item active">Tạo mới</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">Loại thiết bị mới</h3>
+	</div>
+	<EditForm OnValidSubmit="Submit" FormName="CreateEquipmentType" Model="Model">
+		<DataAnnotationsValidator />
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label> Tên thiết bị</label>
+					<InputText class="form-control" @bind-Value="Model.EquipmentTypeName" />
+					<ValidationMessage For="() => Model.EquipmentTypeName" />
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-primary mr-2" type="submit">Lưu</button>
+				<a class="btn btn-secondary" href="/equipmenttype">Trở về</a>
+			</div>
+		</div>
+	</EditForm>
+</div>

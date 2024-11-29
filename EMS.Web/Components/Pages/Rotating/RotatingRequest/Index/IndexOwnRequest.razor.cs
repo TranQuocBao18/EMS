@@ -57,6 +57,16 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Index
 
 		protected async Task HandleDelete()
 		{
+			var requestToDelete = OwnRotatingRequestModels.FirstOrDefault(r => r.ID == DeleteID);
+
+			// Kiểm tra nếu yêu cầu tồn tại và có trạng thái duyệt cấp 2
+			if (requestToDelete != null && requestToDelete.AcceptanceLv2Status != null)
+			{
+				ToastService.ShowError("Không thể xoá yêu cầu đang đợi duyệt hoặc đã được duyệt!");
+				Modal.Close();
+				return;
+			}
+
 			var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/RotatingRequest/{DeleteID}");
 			if (res != null && res.Success)
 			{
