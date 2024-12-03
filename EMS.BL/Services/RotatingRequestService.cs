@@ -18,7 +18,7 @@ namespace EMS.BL.Services
         Task<RotatingRequestModel> ApproveRequestLv2(ApproveRequestDto dto);
         Task<List<RotatingRequestModel>> GetPendingRequestsLv3();
         Task<RotatingRequestModel> ApproveRequestLv3(ApproveRequestDto dto);
-        Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto);
+        Task<RotatingHistoryModel> CompleteRequest(CompletePurchasingRequestDto dto);
         Task<List<RotatingRequestModel>> GetApprovedRequest();
         Task<bool> RotatingRequestModelExists(int id);
         Task UpdateRequest(RotatingRequestModel rotatingRequestModel);
@@ -36,7 +36,7 @@ namespace EMS.BL.Services
             return rotatingRequestRepository.ApproveRequestLv3(dto);
         }
 
-        public Task<RotatingHistoryModel> CompleteRequest(CompleteRequestDto dto)
+        public Task<RotatingHistoryModel> CompleteRequest(CompletePurchasingRequestDto dto)
         {
             return rotatingRequestRepository.CompleteRequest(dto);
         }

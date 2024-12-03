@@ -50,7 +50,12 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Update
         public async Task Submit()
         {
             Model.ReviewerId = User.ID;
-            var res = await ApiClient.PostAsync<BaseResponseModel, ApproveRequestDto>($"/api/RotatingRequest/lv3/approve", Model);
+			if (string.IsNullOrWhiteSpace(Model.Reason))
+			{
+				ToastService.ShowError("Vui lòng nhập lý do duyệt!");
+				return;
+			}
+			var res = await ApiClient.PostAsync<BaseResponseModel, ApproveRequestDto>($"/api/RotatingRequest/lv3/approve", Model);
             if (res != null && res.Success)
             {
                 ToastService.ShowSuccess("Duyệt yêu cầu thành công!");

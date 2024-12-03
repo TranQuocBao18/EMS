@@ -25,22 +25,13 @@ namespace EMS.Web.Components.Pages.Equipment
 
 		protected async Task LoadEquipment()
 		{
-			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Equipment");
+			var res = await ApiClient.GetFromJsonAsync<BaseResponseModel>("/api/Equipment/all");
 			if (res != null && res.Success)
 			{
 				EquipmentModels = JsonConvert.DeserializeObject<List<EquipmentModel>>(res.Data.ToString());
 			}
 		}
 
-		protected async Task HandleDelete()
-		{
-			var res = await ApiClient.DeleteAsync<BaseResponseModel>($"/api/Equipment/{DeleteID}");
-			if (res != null && res.Success)
-			{
-				ToastService.ShowSuccess("Xoá thiết bị hoàn tất");
-				await LoadEquipment();
-				Modal.Close();
-			}
-		}
+		
 	}
 }

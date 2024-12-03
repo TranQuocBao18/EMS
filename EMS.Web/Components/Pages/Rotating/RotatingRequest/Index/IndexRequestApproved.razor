@@ -1,4 +1,5 @@
 ﻿@page "/rotating/approved"
+@using EMS.Model.Entities
 <PageTitle>Yêu cầu luân chuyển đã được phê duyệt</PageTitle>
 
 
@@ -67,7 +68,14 @@ else
 											<td>@rotatingRequest.ReviewerLv3.Username</td>
 											<td>@rotatingRequest.ReasonLv3</td>
 											<td>
-												<a class="btn btn-secondary" href="/rotating/approved/rotate/@rotatingRequest.ID">Luân chuyển</a>
+												@if (rotatingRequest.RequestStatus == RequestStatus.InProgress)
+												{
+													<a class="btn btn-secondary" href="/rotating/approved/rotate/@rotatingRequest.ID">Luân chuyển</a>
+												}
+												else if (rotatingRequest.RequestStatus == RequestStatus.Completed)
+												{
+													<a class="btn btn-secondary" href="/rotating/history">Xem lịch sử</a>
+												}
 											</td>
 										</tr>
 									}

@@ -11,6 +11,7 @@ namespace EMS.BL.Services
 	public interface IEquipmentService
 	{
 		Task<List<EquipmentModel>> GetEquipments();
+		Task<List<EquipmentModel>> GetAllEquipments();
 		Task<int> GetEquipmentsAmount();
 		Task<EquipmentModel> GetEquipment(int id);
 		Task UpdateEquipment(EquipmentModel equipment);
@@ -34,6 +35,11 @@ namespace EMS.BL.Services
 		public Task<bool> EquipmentModelExists(int id)
 		{
 			return equipmentRepository.EquipmentModelExists(id);
+		}
+
+		public Task<List<EquipmentModel>> GetAllEquipments()
+		{
+			return equipmentRepository.GetAllEquipments();
 		}
 
 		public Task<EquipmentModel> GetEquipment(int id)

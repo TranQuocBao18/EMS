@@ -73,7 +73,7 @@ namespace EMS.ApiService.Controllers
         }
 
         [HttpPost("complete")]
-        public async Task<ActionResult<BaseResponseModel>> CompleteRequest(CompleteRequestDto dto)
+        public async Task<ActionResult<BaseResponseModel>> CompleteRequest(CompletePurchasingRequestDto dto)
         {
             var request = await rotatingRequestService.CompleteRequest(dto);
 

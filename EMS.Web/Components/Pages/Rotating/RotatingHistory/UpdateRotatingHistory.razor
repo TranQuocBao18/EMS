@@ -49,7 +49,7 @@
 				<div class="col-md-6">
 					<label>Thiết bị</label>
 					<InputSelect class="form-control" @bind-Value="Model.EquipmentId">
-						<option value="">Chọn loại thiết bị</option>
+						<option value="">Chọn thiết bị</option>
 						@foreach (var equipment in Equipments)
 						{
 							<option value="@equipment.ID">@equipment.EquipmentName</option>
@@ -91,7 +91,7 @@
 				<div class="col-md-6">
 					<label>Người duyệt Lv2</label>
 					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv2Id">
-						<option value="">Chọn phòng ban</option>
+						<option value="">Chọn người dùng</option>
 						@foreach (var user in ReviewerLv2)
 						{
 							<option value="@user.ID">@user.Username</option>
@@ -102,7 +102,7 @@
 				<div class="col-md-6">
 					<label>Người duyệt Lv3</label>
 					<InputSelect class="form-control" @bind-Value="Model.ReviewerLv3Id">
-						<option value="">Chọn phòng ban</option>
+						<option value="">Chọn người dùng</option>
 						@foreach (var user in ReviewerLv3)
 						{
 							<option value="@user.ID">@user.Username</option>

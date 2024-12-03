@@ -56,6 +56,10 @@ namespace EMS.BL.Repositories
 			request.AcceptanceLv3Status = dto.AcceptanceStatus;
 			request.ReasonLv3 = dto.Reason;
 			request.ReviewerLv3ID = dto.ReviewerId;
+			if (dto.AcceptanceStatus)
+			{
+				request.RequestStatus = RequestStatus.InProgress;
+			}
 
 			request.ReviewerLv3 = await dbContext.Users.FindAsync(dto.ReviewerId);
 
@@ -89,6 +93,8 @@ namespace EMS.BL.Repositories
 				LiquidationRequestID = request.ID,
 				Notes = dto.Note
 			};
+			request.RequestStatus = RequestStatus.Completed;
+
 			equipment.Status = EquipmentStatus.DaThanhLy;
 			equipment.ExpireDay = null;
 
@@ -104,6 +110,8 @@ namespace EMS.BL.Repositories
 			request.AcceptanceLv3Status = null;
 			request.ReviewerLv2ID = null;
 			request.ReviewerLv3ID = null;
+			request.RequestStatus = RequestStatus.Pending;
+
 
 			request.Equipment = await dbContext.Equipments.FindAsync(request.EquipmentId);
 			request.User = await dbContext.Users.FindAsync(request.UserId);

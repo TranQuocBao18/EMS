@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace EMS.Model.Entities
 {
+	public enum RequestStatus
+	{
+		Pending = 1,
+		InProgress = 2,
+		Completed = 3
+	}
 	public class RotatingRequestModel
 	{
 		public int ID { get; set; }  // Khóa chính
@@ -37,6 +43,7 @@ namespace EMS.Model.Entities
 		public string ReasonLv3 { get; set; }  // Lý do nếu bị từ chối cấp 3
 		public int? ReviewerLv3ID { get; set; }  // Người duyệt cấp 3 (Khóa ngoại đến User)
 		public virtual UserModel ReviewerLv3 { get; set; }
+		public RequestStatus RequestStatus { get; set; } // Pending, InProgress, Completed
 
 	}
 }

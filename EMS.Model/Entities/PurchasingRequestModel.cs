@@ -25,6 +25,8 @@ namespace EMS.Model.Entities
 		public string ReasonLv3 { get; set; }  // Lý do nếu bị từ chối cấp 3
 		public int? ReviewerLv3ID { get; set; }  // Người duyệt cấp 3 (Khóa ngoại đến User)
 		public virtual UserModel ReviewerLv3 { get; set; }
+		public RequestStatus RequestStatus { get; set; } // Pending, InProgress, Completed
+
 
 		public virtual ICollection<PurchasingRequestDetailModel> PurchasingRequestDetails { get; set; }
 	}

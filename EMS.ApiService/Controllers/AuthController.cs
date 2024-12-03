@@ -19,6 +19,10 @@ namespace EMS.ApiService.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginModel loginModel)
 		{
+			if (loginModel.Username == null || loginModel.Password == null) 
+			{
+				return BadRequest(new { Message = "Vui lòng nhập tài khoản và mật khẩu" });
+			}
 			var user = await authService.GetUserByLogin(loginModel.Username, loginModel.Password);
 			// Trường hợp tài khoản không tồn tại hoặc mật khẩu không đúng
 			if (user == null)

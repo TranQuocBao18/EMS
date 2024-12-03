@@ -79,6 +79,16 @@ namespace EMS.Web.Components.Pages.Rotating.RotatingRequest.Create
 		public async Task Submit()
 		{
 			Model.UserId = User.ID;
+			if(Model.ToDepartmentId == 0)
+			{
+				ToastService.ShowError("Vui lòng chọn Phòng/Khoa luân chuyển!");
+				return;
+			}
+			if(string.IsNullOrWhiteSpace(Model.RequestReason))
+			{
+				ToastService.ShowError("Vui lòng nhập lý do yêu cầu!");
+				return;
+			}	
 			var res = await ApiClient.PostAsync<BaseResponseModel, RotatingRequestModel>("/api/RotatingRequest/create", Model);
 			if (res != null && res.Success)
 			{

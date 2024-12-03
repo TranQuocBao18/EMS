@@ -57,7 +57,6 @@ else
 											<td>@equipmentType.ID</td>
 											<td>@equipmentType.EquipmentTypeName</td>
 											<td>
-												<a class="btn btn-secondary mb-2" href="/equipmenttype/update/@equipmentType.ID">Cập nhật</a>
 												<button class="btn btn-danger" @onclick="()=> { DeleteID = equipmentType.ID; Modal.Open();}">Xoá</button>
 											</td>
 										</tr>
@@ -79,7 +78,7 @@ else
 	<AppModal @ref="Modal">
 		<Title>Notification</Title>
 		<Body>
-			Bạn có muốn xoá thiết bị này ?
+			Bạn có muốn xoá loại thiết bị này ?
 		</Body>
 		<Footer>
 			<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Có</button>

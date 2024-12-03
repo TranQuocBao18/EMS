@@ -31,7 +31,7 @@
 				<div class="col-md-6">
 					<label> Loại thiết bị</label>
 					<InputSelect class="form-control" @bind-Value="Model.EquipmentId">
-						<option value="">Chọn loại thiết bị</option>
+						<option value="">Chọn thiết bị</option>
 						@foreach (var equipment in Equipments)
 						{
 							<option value="@equipment.ID">@equipment.EquipmentName</option>

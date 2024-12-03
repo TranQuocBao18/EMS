@@ -9,9 +9,9 @@ namespace EMS.Model.Models.Others
 {
     public class LoginModel
     {
-        [Required]
-        public string Username { get; set; }
-        [Required]
-        public string Password { get; set; }
+		[Required(ErrorMessage = "Username is required.")]
+		public string Username { get; set; }
+		[Required(ErrorMessage = "Password is required.")]
+		public string Password { get; set; }
     }
 }

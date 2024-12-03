@@ -1,4 +1,5 @@
 ﻿@page "/liquidation/approved"
+@using EMS.Model.Entities
 <PageTitle>Yêu cầu thanh lý đã được phê duyệt</PageTitle>
 
 
@@ -63,7 +64,14 @@ else
 											<td>@request.ReviewerLv3.Username</td>
 											<td>@request.ReasonLv3</td>
 											<td>
-												<a class="btn btn-secondary" href="/liquidation/approved/liquidate/@request.ID">Thanh lý</a>
+												@if (request.RequestStatus == RequestStatus.InProgress)
+												{
+													<a class="btn btn-secondary" href="/liquidation/approved/liquidate/@request.ID">Thanh lý</a>
+												}
+												else if (request.RequestStatus == RequestStatus.Completed)
+												{
+													<a class="btn btn-secondary" href="/purchasing/history">Xem lịch sử</a>
+												}
 											</td>
 										</tr>
 									}

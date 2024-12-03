@@ -1,0 +1,89 @@
+﻿@page "/equipment/update/{ID:int}"
+@using EMS.Model.Entities
+@rendermode InteractiveServer
+<PageTitle>Cập nhật thông tin thiết bị</PageTitle>
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Cập nhật Thiết bị</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/equipment">Thiết bị</a></li>
+                    <li class="breadcrumb-item active">Cập nhật</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Thiết bị</h3>
+    </div>
+    <EditForm OnValidSubmit="Submit" FormName="UpdateEquipment" Model="Model">
+        <DataAnnotationsValidator />
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>ID</label>
+                    <InputNumber class="form-control" @bind-Value="Model.ID" disabled="true" />
+                    <ValidationMessage For="() => Model.ID" />
+                </div>
+                <div class="col-md-6">
+                    <label>Tên thiết bị</label>
+                    <InputText class="form-control" @bind-Value="Model.EquipmentName" />
+                    <ValidationMessage For="() => Model.EquipmentName" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Mã Model</label>
+                    <InputText class="form-control" @bind-Value="Model.EquipmentModelCode" />
+                    <ValidationMessage For="() => Model.EquipmentModelCode" />
+                </div>
+                <div class="col-md-6">
+                    <label>Mã Seri</label>
+                    <InputText class="form-control" @bind-Value="Model.EquipmentSerial" />
+                    <ValidationMessage For="() => Model.EquipmentSerial" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Loại thiết bị</label>
+                    <InputSelect class="form-control" @bind-Value="Model.EquipmentTypeId">
+                        <option value="">Chọn loại thiết bị</option>
+                        @foreach (var equipmentType in EquipmentTypes)
+                        {
+                            <option value="@equipmentType.ID">@equipmentType.EquipmentTypeName</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Model.EquipmentTypeId" />
+                </div>
+                <div class="col-md-6">
+                    <label>Giá</label>
+                    <InputNumber class="form-control" @bind-Value="Model.Price" />
+                    <ValidationMessage For="() => Model.Price" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Ngày mua</label>
+                    <InputDate class="form-control" @bind-Value="Model.PurchaseDay" />
+                    <ValidationMessage For="() => Model.PurchaseDay" />
+                </div>
+                
+            </div>
+            
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary mr-2" type="submit">Lưu</button>
+            <a class="btn btn-secondary" href="/department">Trở về</a>
+        </div>
+    </EditForm>
+</div>
+

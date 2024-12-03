@@ -1,61 +1,84 @@
 ﻿@page "/user/register"
 @inject NavigationManager Navigation
 @using System.ComponentModel.DataAnnotations
-<h3>RegisterUser</h3>
+<PageTitle>Đăng ký</PageTitle>
 
-<div class="p-5">
-    <EditForm Model="registerModel" FormName="Register" OnValidSubmit="HandleRegister">
-        <DataAnnotationsValidator />
-        <div class="form-group">
-            <label for="username">Tên tài khoản</label>
-            <InputText id="username" class="form-control" @bind-Value="registerModel.Username" />
-            <ValidationMessage For="@(() => registerModel.Username)" />
-        </div>
-        <div class="form-group">
-            <label for="password">Mật khẩu</label>
-            <div class="input-group">
-                <InputText id="password" class="form-control" type="@passwordInputType" @bind-Value="registerModel.Password" />
-                <span class="input-group-text" @onclick="TogglePasswordVisibility" style="cursor:pointer;">
-                    <i class="@passwordIcon"></i>
-                </span>
-            </div>
-            <ValidationMessage For="@(() => registerModel.Password)" />
-        </div>
-        <div class="form-group">
-            <label for="passwordconfirm">Nhập lại mật khẩu</label>
-            <div class="input-group">
-                <InputText id="passwordconfirm" class="form-control" type="@confirmPasswordInputType" @bind-Value="registerModel.PasswordConfirm" />
-                <span class="input-group-text" @onclick="ToggleConfirmPasswordVisibility" style="cursor:pointer;">
-                    <i class="@confirmPasswordIcon"></i>
-                </span>
-            </div>
-            <ValidationMessage For="@(() => registerModel.PasswordConfirm)" />
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Vai trò</label>
-                @foreach (var role in AllRoles)
-                {
-                    <div>
-                        <InputCheckbox @bind-Value="role.IsSelected" />
-                        @role.RoleName
-                    </div>
-                }
-                <ValidationMessage For="@(() => registerModel.RoleIDs)" /> <!-- Hiển thị thông báo lỗi cho RoleIDs -->
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">Register</button>
-        <a class="btn btn-secondary mt-3" href="/user">Back</a>
-    </EditForm>
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Đăng ký Người dùng</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item active">Đăng ký người dùng</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<div class="hold-transition register-page">
+	<div class="register-box">
+		<div class="card">
+			<div class="card-body register-card-body">
+				<EditForm Model="registerModel" FormName="Register" OnValidSubmit="HandleRegister">
+					<DataAnnotationsValidator />
+					<div class="form-group">
+						<label for="username">Tên tài khoản</label>
+						<InputText id="username" class="form-control" @bind-Value="registerModel.Username" />
+						<ValidationMessage For="@(() => registerModel.Username)" />
+					</div>
+					<div class="form-group">
+						<label for="password">Mật khẩu</label>
+						<div class="input-group">
+							<InputText id="password" class="form-control" type="@passwordInputType" @bind-Value="registerModel.Password" />
+							<span class="input-group-text" @onclick="TogglePasswordVisibility" style="cursor:pointer;">
+								<i class="@passwordIcon"></i>
+							</span>
+						</div>
+						<ValidationMessage For="@(() => registerModel.Password)" />
+					</div>
+					<div class="form-group">
+						<label for="passwordconfirm">Nhập lại mật khẩu</label>
+						<div class="input-group">
+							<InputText id="passwordconfirm" class="form-control" type="@confirmPasswordInputType" @bind-Value="registerModel.PasswordConfirm" />
+							<span class="input-group-text" @onclick="ToggleConfirmPasswordVisibility" style="cursor:pointer;">
+								<i class="@confirmPasswordIcon"></i>
+							</span>
+						</div>
+						<ValidationMessage For="@(() => registerModel.PasswordConfirm)" />
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label>Vai trò</label>
+							@foreach (var role in AllRoles)
+							{
+								<div>
+									<InputCheckbox @bind-Value="role.IsSelected" />
+									@role.RoleName
+								</div>
+							}
+							<ValidationMessage For="@(() => registerModel.RoleIDs)" /> <!-- Hiển thị thông báo lỗi cho RoleIDs -->
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary mt-3">Đăng ký</button>
+					<a class="btn btn-secondary mt-3" href="/user">Trở về</a>
+				</EditForm>
+			</div>
+		</div>
+	</div>
 </div>
 
 <AppModal @ref="Modal">
-    <Title>Notification</Title>
-    <Body>
-        Bạn có muốn đăng xuất hay không ?
-    </Body>
-    <Footer>
-        <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLogout">Có</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Không</button>
-    </Footer>
+	<Title>Notification</Title>
+	<Body>
+		Bạn có muốn đăng xuất hay không ?
+	</Body>
+	<Footer>
+		<button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleLogout">Có</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Không</button>
+	</Footer>
 </AppModal>

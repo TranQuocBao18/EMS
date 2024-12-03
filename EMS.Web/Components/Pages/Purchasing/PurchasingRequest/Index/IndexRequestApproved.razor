@@ -1,4 +1,5 @@
 ﻿@page "/purchasing/approved"
+@using EMS.Model.Entities
 <PageTitle>Yêu cầu mua mới thiết bị đã hoàn thành phê duyệt</PageTitle>
 
 
@@ -78,7 +79,14 @@ else
 												</ul>
 											</td>
 											<td>
-												<a class="btn btn-secondary" href="/purchasing/approved/purchase/@request.ID">Thực thi</a>
+												@if (request.RequestStatus == RequestStatus.InProgress)
+												{
+													<a class="btn btn-secondary" href="/purchasing/approved/purchase/@request.ID">Thực thi</a>
+												}
+												else if (request.RequestStatus == RequestStatus.Completed)
+												{
+													<a class="btn btn-secondary" href="/purchasing/history">Xem lịch sử</a>
+												}
 											</td>
 										</tr>
 									}

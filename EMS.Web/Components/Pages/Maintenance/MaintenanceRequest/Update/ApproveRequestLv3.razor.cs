@@ -50,6 +50,11 @@ namespace EMS.Web.Components.Pages.Maintenance.MaintenanceRequest.Update
 		public async Task Submit()
 		{
 			Model.ReviewerId = User.ID;
+			if (string.IsNullOrWhiteSpace(Model.Reason))
+			{
+				ToastService.ShowError("Vui lòng nhập lý do duyệt!");
+				return;
+			}
 			var res = await ApiClient.PostAsync<BaseResponseModel, ApproveRequestDto>($"/api/MaintenanceRequest/lv3/approve", Model);
 			if (res != null && res.Success)
 			{

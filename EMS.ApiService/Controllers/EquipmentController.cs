@@ -16,6 +16,12 @@ namespace EMS.ApiService.Controllers
 			var equipments = await equipmentService.GetEquipments();
 			return Ok(new BaseResponseModel { Success = true, Data = equipments });
 		}
+		[HttpGet("all")]
+		public async Task<ActionResult<BaseResponseModel>> GetAllEquipments()
+		{
+			var equipments = await equipmentService.GetAllEquipments();
+			return Ok(new BaseResponseModel { Success = true, Data = equipments });
+		}
 
 		[HttpGet("count")]
 		public async Task<ActionResult<BaseResponseModel>> GetEquipmentsAmount()
